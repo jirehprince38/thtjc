@@ -209,7 +209,7 @@ export function ChurchSite() {
                     <Sparkles className="size-5 text-[#d6b26e]" />
                   </div>
                   <div>
-                    <p className="font-serif text-4xl leading-tight">“Go and make disciples of all nations.”</p>
+                    <p className="font-serif text-4xl leading-tight">"Go and make disciples of all nations."</p>
                     <p className="mt-5 text-xs font-semibold uppercase tracking-[0.22em] text-[#d6b26e]">Matthew 28:19</p>
                   </div>
                   <div className="flex items-center gap-2 text-sm text-[#d9e4dc]">
@@ -281,7 +281,7 @@ export function ChurchSite() {
                 try {
                   await sendPrayerMessage(String(data.get('name') || ''), String(data.get('message') || ''))
                   form.reset()
-                  window.location.href = '/prayer-wall?submitted=1'
+                  window.location.href = '/prayer-wall'
                 } catch {
                   window.alert('Could not send your prayer request. Please try again.')
                 }
@@ -297,7 +297,7 @@ export function ChurchSite() {
           </div>
           <div className="rounded-2xl bg-[#1c5b4d] p-8 text-[#f7f5f0]">
             <MessageCircle className="size-7 text-[#d6b26e]" />
-            <p className="mt-10 font-serif text-3xl leading-tight">“You are welcome here.”</p>
+            <p className="mt-10 font-serif text-3xl leading-tight">"You are welcome here."</p>
             <p className="mt-4 text-sm leading-6 text-[#d9e4dc]">No matter where you are in your journey, there is room for you in this family.</p>
           </div>
         </section>
