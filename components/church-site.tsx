@@ -141,7 +141,6 @@ export function ChurchSite() {
             <a className="transition-colors hover:text-[#1c5b4d]" href="#welcome">Welcome</a>
             <a className="transition-colors hover:text-[#1c5b4d]" href="#services">Services</a>
             <a className="transition-colors hover:text-[#1c5b4d]" href="#contact">Contact</a>
-            <a className="transition-colors hover:text-[#1c5b4d]" href="/prayer-message">Prayer Wall</a>
           </nav>
 
           <button
@@ -158,7 +157,6 @@ export function ChurchSite() {
               <a href="#welcome" onClick={() => setMobileNavOpen(false)}>Welcome</a>
               <a href="#services" onClick={() => setMobileNavOpen(false)}>Services</a>
               <a href="#contact" onClick={() => setMobileNavOpen(false)}>Contact</a>
-              <a href="/prayer-message">Prayer Wall</a>
             </div>
           </nav>
         )}
@@ -283,7 +281,7 @@ export function ChurchSite() {
                 try {
                   await sendPrayerMessage(String(data.get('name') || ''), String(data.get('message') || ''))
                   form.reset()
-                  window.location.href = '/prayer-message'
+                  window.location.href = '/prayer-wall'
                 } catch {
                   window.alert('Could not send your message. Please try again.')
                 }
