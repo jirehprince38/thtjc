@@ -270,7 +270,7 @@ export function ChurchSite() {
         <section id="contact" className="mx-auto grid max-w-7xl gap-12 px-5 py-24 lg:grid-cols-[1fr_0.8fr] lg:px-10">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#c49752]">We&apos;d love to hear from you</p>
-            <h2 className="mt-4 max-w-lg font-serif text-4xl leading-tight tracking-[-0.03em] sm:text-5xl">Have a question or prayer request?</h2>
+            <h2 className="mt-4 max-w-lg font-serif text-4xl leading-tight tracking-[-0.03em] sm:text-5xl">Share your prayer request</h2>
             <p className="mt-6 max-w-lg leading-7 text-[#59615b]">Send your name and prayer request below. It will be posted on our Prayer Wall so we can pray for you.</p>
             <form
               className="mt-8 max-w-lg space-y-4"
@@ -281,16 +281,16 @@ export function ChurchSite() {
                 try {
                   await sendPrayerMessage(String(data.get('name') || ''), String(data.get('message') || ''))
                   form.reset()
-                  window.location.href = '/prayer-wall'
+                  window.location.href = '/prayer-wall?submitted=1'
                 } catch {
-                  window.alert('Could not send your message. Please try again.')
+                  window.alert('Could not send your prayer request. Please try again.')
                 }
               }}
             >
-              <input name="name" required maxLength={120} placeholder="Your name" className="h-12 w-full rounded-xl border border-[#cbd3cb] bg-white px-4 text-sm outline-none focus:border-[#1c5b4d]" />
-              <textarea name="message" required minLength={3} maxLength={3000} placeholder="Your question or message" className="min-h-32 w-full rounded-xl border border-[#cbd3cb] bg-white px-4 py-3 text-sm outline-none focus:border-[#1c5b4d]" />
+              <input name="name" required maxLength={120} placeholder="Your name" className="h-12 w-full rounded-xl border border-[#cbd3cb] bg-white px-4 text-sm outline-none focus:border-[#1c5b4d] focus:ring-2 focus:ring-[#1c5b4d]/15" />
+              <textarea name="message" required minLength={3} maxLength={3000} placeholder="Your prayer request" className="min-h-32 w-full rounded-xl border border-[#cbd3cb] bg-white px-4 py-3 text-sm outline-none focus:border-[#1c5b4d] focus:ring-2 focus:ring-[#1c5b4d]/15" />
               <button className="inline-flex items-center gap-2 rounded-full bg-[#1c5b4d] px-5 py-3 text-sm font-semibold text-white">
-                <MessageCircle className="size-4" /> Send message
+                <MessageCircle className="size-4" /> Send prayer request
               </button>
             </form>
             <SectionPhotos images={settings.sectionImages.contact} label="Contact" />

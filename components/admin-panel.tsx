@@ -33,8 +33,7 @@ const imageSections: { id: ContentSection; label: string }[] = [
   { id: 'contact', label: 'Contact text' },
 ]
 
-const MAX_IMAGE_BYTES = 300_000
-
+const MAX_IMAGE_BYTES = 300 * 1024
 
 function readImageFile(file: File) {
   return new Promise<string>((resolve, reject) => {
@@ -137,7 +136,8 @@ export default function AdminPanel() {
       return
     }
     if (file.size > MAX_IMAGE_BYTES) {
-      setNotice('Each image must be 300 KB or smaller.')
+      const sizeInKb = Math.round(file.size / 1024)
+      setNotice(`This image is ${sizeInKb} KB. Please use 300 KB or smaller.`)
       return
     }
     try {
