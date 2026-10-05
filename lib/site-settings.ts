@@ -16,6 +16,7 @@ export type SiteSettings = {
   logoUrl: string
   prayerTitle: string
   prayerDescription: string
+  prayerLeaderName: string
   prayerLink: string
   prayerStartsAt: string
   returnTime: string
@@ -30,6 +31,7 @@ export const initialSettings: SiteSettings = {
   prayerTitle: 'Join our online prayer here',
   prayerDescription:
     'We gather online to pray, encourage one another, and make space for God together.',
+  prayerLeaderName: '',
   prayerLink: 'https://meet.google.com/',
   prayerStartsAt: '',
   returnTime: '9:00 PM',
@@ -67,6 +69,7 @@ export function readSiteSettings(): SiteSettings {
     return {
       ...initialSettings,
       ...parsed,
+      prayerLeaderName: String(parsed.prayerLeaderName || ''),
       services: Array.isArray(parsed.services)
         ? parsed.services.map((service, index) => ({
             ...initialSettings.services[index % initialSettings.services.length],
@@ -85,7 +88,6 @@ export function readSiteSettings(): SiteSettings {
   }
 }
 
-// Shared online storage so every phone/computer sees the same settings.
 const REMOTE_URL = 'https://uyvzaowcbpvyhyvzrccj.supabase.co/rest/v1/site_settings'
 const REMOTE_KEY = 'sb_publishable_DVuX2f0iSzSIwgXuAUO56A_DdcUN05B'
 const remoteHeaders = { apikey: REMOTE_KEY, 'Content-Type': 'application/json' }
@@ -130,14 +132,12 @@ export async function saveSiteSettings(settings: SiteSettings) {
   cacheLocally(settings)
 }
 
-// Next nightly prayer: every day at 9:00 PM Philippine time (UTC+8, no DST).
 export const PRAYER_HOUR_PH = 21
 export function nextPrayerTime(now = Date.now()) {
   const PH_OFFSET = 8 * 3600_000
   const ph = new Date(now + PH_OFFSET)
   let target =
     Date.UTC(ph.getUTCFullYear(), ph.getUTCMonth(), ph.getUTCDate(), PRAYER_HOUR_PH) - PH_OFFSET
-  // Keep showing "prayer time" for 1 hour after it starts
   if (now >= target + 3600_000) target += 86400_000
   return target
 }
