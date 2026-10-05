@@ -167,3 +167,9 @@
     color: #202320;
   }
 }
+
+@media print {
+  .print\:hidden {
+    display: none !important;
+  }
+}
