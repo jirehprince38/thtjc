@@ -103,6 +103,7 @@ function PrayerCountdown({ startsAt }: { startsAt: string }) {
 export function ChurchSite() {
   const [settings, setSettings] = useState<SiteSettings>(initialSettings)
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
+  const [submitNotice, setSubmitNotice] = useState('')
 
   useEffect(() => {
     const refreshSettings = () => setSettings(readSiteSettings())
@@ -198,6 +199,11 @@ export function ChurchSite() {
               {settings.prayerDescription && (
                 <p className="mt-4 max-w-xl text-sm leading-6 text-[#59615b]">{settings.prayerDescription}</p>
               )}
+              {settings.prayerLeaderName && (
+                <p className="mt-3 text-sm font-semibold text-[#1c5b4d]">
+                  Prayer leader: {settings.prayerLeaderName}
+                </p>
+              )}
               <PrayerCountdown startsAt={settings.prayerStartsAt} />
             </div>
 
@@ -272,6 +278,11 @@ export function ChurchSite() {
             <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#c49752]">We&apos;d love to hear from you</p>
             <h2 className="mt-4 max-w-lg font-serif text-4xl leading-tight tracking-[-0.03em] sm:text-5xl">Share your prayer request</h2>
             <p className="mt-6 max-w-lg leading-7 text-[#59615b]">Send your name and prayer request below. It will be posted on our Prayer Wall so we can pray for you.</p>
+            {submitNotice && (
+              <p className="mt-4 rounded-xl border border-[#cde0d7] bg-[#edf7f1] px-4 py-3 text-sm font-medium text-[#1c5b4d]">
+                {submitNotice}
+              </p>
+            )}
             <form
               className="mt-8 max-w-lg space-y-4"
               onSubmit={async (event) => {
@@ -281,9 +292,9 @@ export function ChurchSite() {
                 try {
                   await sendPrayerMessage(String(data.get('name') || ''), String(data.get('message') || ''))
                   form.reset()
-                  window.location.href = '/prayer-wall'
+                  setSubmitNotice('You submitted your prayer request.')
                 } catch {
-                  window.alert('Could not send your prayer request. Please try again.')
+                  setSubmitNotice('Could not send your prayer request. Please try again.')
                 }
               }}
             >
