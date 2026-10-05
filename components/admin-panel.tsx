@@ -13,6 +13,7 @@ import {
 } from 'lucide-react'
 import {
   initialSettings,
+  loadRemoteSettings,
   readSiteSettings,
   safeImageUrl,
   saveSiteSettings,
@@ -34,12 +35,6 @@ const imageSections: { id: ContentSection; label: string }[] = [
 
 const MAX_IMAGE_BYTES = 300_000
 
-function nextLocalDateTime() {
-  const date = new Date(Date.now() + 60 * 60 * 1000)
-  return new Date(date.getTime() - date.getTimezoneOffset() * 60_000)
-    .toISOString()
-    .slice(0, 16)
-}
 
 function readImageFile(file: File) {
   return new Promise<string>((resolve, reject) => {
@@ -113,7 +108,10 @@ export default function AdminPanel() {
 
   useEffect(() => {
     setSettings(readSiteSettings())
-    setReady(true)
+    loadRemoteSettings().then((remote) => {
+      setSettings(remote)
+      setReady(true)
+    })
   }, [])
 
   function update(patch: Partial<SiteSettings>) {
@@ -139,12 +137,12 @@ export default function AdminPanel() {
       return
     }
     if (file.size > MAX_IMAGE_BYTES) {
-      setNotice('For browser storage, each image must be 300 KB or smaller.')
+      setNotice('Each image must be 300 KB or smaller.')
       return
     }
     try {
       onValue(await readImageFile(file))
-      setNotice('Image ready. Save changes to keep it in this browser.')
+      setNotice('Image ready. Press Save to publish it for everyone.')
     } catch {
       setNotice('The image could not be read. Try another file.')
     }
@@ -158,7 +156,7 @@ export default function AdminPanel() {
     })
   }
 
-  function save() {
+  async function save() {
     const images = [
       settings.logoUrl,
       ...Object.values(settings.sectionImages).flat(),
@@ -168,8 +166,9 @@ export default function AdminPanel() {
       return
     }
     try {
-      saveSiteSettings(settings)
-      setNotice('Saved in this browser. Open the public page here to preview it.')
+      setNotice('Saving...')
+      await saveSiteSettings(settings)
+      setNotice('Saved! Everyone will now see these changes.')
     } catch {
       setNotice('Could not save. Remove an image or use a smaller file, then try again.')
     }
@@ -301,7 +300,7 @@ export default function AdminPanel() {
               <label className="flex items-center justify-between rounded-xl border border-[#d9ddd7] p-4">
                 <span>
                   <span className="block text-sm font-semibold">Show countdown</span>
-                  <span className="mt-1 block text-xs text-[#59615b]">Set a start date and time</span>
+                  <span className="mt-1 block text-xs text-[#59615b]">Every night at 9:00 PM (Philippine time)</span>
                 </span>
                 <input
                   type="checkbox"
@@ -309,7 +308,7 @@ export default function AdminPanel() {
                   onChange={(event) =>
                     update({
                       prayerStartsAt: event.target.checked
-                        ? settings.prayerStartsAt || nextLocalDateTime()
+                        ? 'daily'
                         : '',
                     })
                   }
@@ -341,17 +340,6 @@ export default function AdminPanel() {
                   className={inputClass}
                 />
               </label>
-              {settings.prayerStartsAt && (
-                <label>
-                  <span className="text-sm font-semibold">Prayer start date and time</span>
-                  <input
-                    type="datetime-local"
-                    value={settings.prayerStartsAt}
-                    onChange={(event) => update({ prayerStartsAt: event.target.value })}
-                    className={inputClass}
-                  />
-                </label>
-              )}
               <label>
                 <span className="text-sm font-semibold">Return time when offline</span>
                 <input

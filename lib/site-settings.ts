@@ -85,9 +85,61 @@ export function readSiteSettings(): SiteSettings {
   }
 }
 
-export function saveSiteSettings(settings: SiteSettings) {
-  window.localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(settings))
+// Shared online storage so every phone/computer sees the same settings.
+const REMOTE_URL = 'https://uyvzaowcbpvyhyvzrccj.supabase.co/rest/v1/site_settings'
+const REMOTE_KEY = 'sb_publishable_DVuX2f0iSzSIwgXuAUO56A_DdcUN05B'
+const remoteHeaders = { apikey: REMOTE_KEY, 'Content-Type': 'application/json' }
+
+function cacheLocally(settings: SiteSettings) {
+  try {
+    window.localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(settings))
+  } catch {
+    // ignore full storage; remote copy is the source of truth
+  }
   window.dispatchEvent(new CustomEvent(SETTINGS_EVENT, { detail: settings }))
+}
+
+export async function loadRemoteSettings(): Promise<SiteSettings> {
+  try {
+    const res = await fetch(`${REMOTE_URL}?id=eq.1&select=data`, {
+      headers: remoteHeaders,
+      cache: 'no-store',
+    })
+    if (!res.ok) return readSiteSettings()
+    const rows = (await res.json()) as { data: Partial<SiteSettings> }[]
+    const data = rows[0]?.data
+    if (data && Object.keys(data).length > 0) {
+      window.localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(data))
+      const settings = readSiteSettings()
+      window.dispatchEvent(new CustomEvent(SETTINGS_EVENT, { detail: settings }))
+      return settings
+    }
+  } catch {
+    // offline: fall back to cached copy
+  }
+  return readSiteSettings()
+}
+
+export async function saveSiteSettings(settings: SiteSettings) {
+  const res = await fetch(`${REMOTE_URL}?id=eq.1`, {
+    method: 'PATCH',
+    headers: { ...remoteHeaders, Prefer: 'return=minimal' },
+    body: JSON.stringify({ data: settings, updated_at: new Date().toISOString() }),
+  })
+  if (!res.ok) throw new Error(`Save failed [${res.status}]: ${await res.text()}`)
+  cacheLocally(settings)
+}
+
+// Next nightly prayer: every day at 9:00 PM Philippine time (UTC+8, no DST).
+export const PRAYER_HOUR_PH = 21
+export function nextPrayerTime(now = Date.now()) {
+  const PH_OFFSET = 8 * 3600_000
+  const ph = new Date(now + PH_OFFSET)
+  let target =
+    Date.UTC(ph.getUTCFullYear(), ph.getUTCMonth(), ph.getUTCDate(), PRAYER_HOUR_PH) - PH_OFFSET
+  // Keep showing "prayer time" for 1 hour after it starts
+  if (now >= target + 3600_000) target += 86400_000
+  return target
 }
 
 export function formatServiceTime(value: string) {

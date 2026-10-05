@@ -15,6 +15,8 @@ import {
 import {
   formatServiceTime,
   initialSettings,
+  loadRemoteSettings,
+  nextPrayerTime,
   readSiteSettings,
   SETTINGS_EVENT,
   type SiteSettings,
@@ -63,8 +65,7 @@ function PrayerCountdown({ startsAt }: { startsAt: string }) {
   }, [])
 
   if (!startsAt || now === null) return null
-  const target = new Date(startsAt).getTime()
-  if (!Number.isFinite(target)) return null
+  const target = nextPrayerTime(now)
 
   const remaining = Math.max(0, Math.floor((target - now) / 1000))
   const days = Math.floor(remaining / 86400)
@@ -105,6 +106,7 @@ export function ChurchSite() {
   useEffect(() => {
     const refreshSettings = () => setSettings(readSiteSettings())
     refreshSettings()
+    loadRemoteSettings()
     window.addEventListener(SETTINGS_EVENT, refreshSettings)
     window.addEventListener('storage', refreshSettings)
     return () => {
