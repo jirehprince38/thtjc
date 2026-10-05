@@ -33,7 +33,7 @@ const imageSections: { id: ContentSection; label: string }[] = [
   { id: 'contact', label: 'Contact text' },
 ]
 
-const MAX_IMAGE_BYTES = 10 * 1024
+const MAX_IMAGE_BYTES = 10_000 * 1024
 
 function readImageFile(file: File) {
   return new Promise<string>((resolve, reject) => {
@@ -137,7 +137,7 @@ export default function AdminPanel() {
     }
     if (file.size > MAX_IMAGE_BYTES) {
       const sizeInKb = Math.round(file.size / 1024)
-      setNotice(`This image is ${sizeInKb} KB. Please use 10 KB or smaller.`)
+      setNotice(`This image is ${sizeInKb} KB. Please use 10,000 KB or smaller.`)
       return
     }
     try {
@@ -243,7 +243,7 @@ export default function AdminPanel() {
         <div className="mt-8 space-y-8">
           <section className="rounded-2xl border border-[#d9ddd7] bg-white p-5 sm:p-7">
             <h2 className="font-serif text-2xl">Logo</h2>
-            <p className="mt-1 text-sm text-[#59615b]">Use an image URL or upload an image (10 KB max).</p>
+            <p className="mt-1 text-sm text-[#59615b]">Use an image URL or upload an image (10,000 KB max).</p>
             <div className="mt-5">
               <ImageEditor
                 title="Church logo"
