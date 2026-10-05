@@ -1,11 +1,11 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { ArrowLeft } from 'lucide-react'
 import { listPrayerMessages, type PrayerMessage } from '@/lib/prayer-messages'
 
-export default function PrayerMessagePage() {
+function PrayerWallContent() {
   const [messages, setMessages] = useState<PrayerMessage[] | null>(null)
   const [error, setError] = useState('')
   const [notice, setNotice] = useState('')
@@ -62,5 +62,13 @@ export default function PrayerMessagePage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function PrayerMessagePage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#f7f5f0]" />}>
+      <PrayerWallContent />
+    </Suspense>
   )
 }
