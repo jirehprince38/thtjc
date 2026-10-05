@@ -21,6 +21,7 @@ import {
   SETTINGS_EVENT,
   type SiteSettings,
 } from '@/lib/site-settings'
+import { sendPrayerMessage } from '@/lib/prayer-messages'
 
 function safeWebLink(value: string, fallback = '#') {
   try {
@@ -140,6 +141,7 @@ export function ChurchSite() {
             <a className="transition-colors hover:text-[#1c5b4d]" href="#welcome">Welcome</a>
             <a className="transition-colors hover:text-[#1c5b4d]" href="#services">Services</a>
             <a className="transition-colors hover:text-[#1c5b4d]" href="#contact">Contact</a>
+            <a className="transition-colors hover:text-[#1c5b4d]" href="/prayer-message">Prayer Wall</a>
           </nav>
 
           <button
@@ -156,6 +158,7 @@ export function ChurchSite() {
               <a href="#welcome" onClick={() => setMobileNavOpen(false)}>Welcome</a>
               <a href="#services" onClick={() => setMobileNavOpen(false)}>Services</a>
               <a href="#contact" onClick={() => setMobileNavOpen(false)}>Contact</a>
+              <a href="/prayer-message">Prayer Wall</a>
             </div>
           </nav>
         )}
@@ -270,20 +273,19 @@ export function ChurchSite() {
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#c49752]">We&apos;d love to hear from you</p>
             <h2 className="mt-4 max-w-lg font-serif text-4xl leading-tight tracking-[-0.03em] sm:text-5xl">Have a question or prayer request?</h2>
-            <p className="mt-6 max-w-lg leading-7 text-[#59615b]">Send your name and message below. Our admin team will receive it securely.</p>
+            <p className="mt-6 max-w-lg leading-7 text-[#59615b]">Send your name and prayer request below. It will be posted on our Prayer Wall so we can pray for you.</p>
             <form
               className="mt-8 max-w-lg space-y-4"
               onSubmit={async (event) => {
                 event.preventDefault()
                 const form = event.currentTarget
-                const response = await fetch('/api/contact', {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify(Object.fromEntries(new FormData(form))),
-                })
-                if (response.ok) {
+                const data = new FormData(form)
+                try {
+                  await sendPrayerMessage(String(data.get('name') || ''), String(data.get('message') || ''))
                   form.reset()
-                  window.alert('Your message was sent. Thank you.')
+                  window.location.href = '/prayer-message'
+                } catch {
+                  window.alert('Could not send your message. Please try again.')
                 }
               }}
             >
