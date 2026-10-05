@@ -21,3 +21,19 @@ export async function listPrayerMessages(): Promise<PrayerMessage[]> {
   if (!res.ok) throw new Error(`Load failed [${res.status}]: ${await res.text()}`)
   return res.json()
 }
+
+export async function deletePrayerMessage(id: string) {
+  const res = await fetch(`${URL_BASE}?id=eq.${id}`, {
+    method: 'DELETE',
+    headers: { ...headers, Prefer: 'return=minimal' },
+  })
+  if (!res.ok) throw new Error(`Delete failed [${res.status}]: ${await res.text()}`)
+}
+
+export async function deleteAllPrayerMessages() {
+  const res = await fetch(URL_BASE, {
+    method: 'DELETE',
+    headers: { ...headers, Prefer: 'return=minimal' },
+  })
+  if (!res.ok) throw new Error(`Delete all failed [${res.status}]: ${await res.text()}`)
+}
