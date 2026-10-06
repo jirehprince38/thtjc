@@ -36,26 +36,40 @@ function safeWebLink(value: string, fallback = '#') {
 function SectionPhotos({
   images,
   label,
+  className = '',
 }: {
   images: [string, string]
   label: string
+  className?: string
 }) {
   const visibleImages = images.filter(Boolean).slice(0, 2)
   if (visibleImages.length === 0) return null
 
+  const isSingle = visibleImages.length === 1
+
   return (
-    <div className="mt-8 grid gap-4 sm:grid-cols-2">
+    <div
+      className={`mt-10 ${
+        isSingle ? 'max-w-3xl' : 'grid gap-6 sm:grid-cols-2'
+      } ${className}`}
+    >
       {visibleImages.map((image, index) => (
         <div
           key={`${label}-${index}`}
-          className="group relative overflow-hidden rounded-[1.5rem] border border-[#d9ddd7] bg-[#eef2ec] shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+          className="group relative overflow-hidden rounded-2xl sm:rounded-3xl border border-[#d9ddd7]/80 bg-[#eef2ec] shadow-md shadow-[#1c5b4d]/5 transition-all duration-500 ease-out hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-[#1c5b4d]/15"
         >
-          <img
-            src={image}
-            alt={`${label} photo ${index + 1}`}
-            className="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-105"
-          />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-white/0" />
+          <div className="overflow-hidden bg-[#e5ebe5]">
+            <img
+              src={image}
+              alt={`${label} photo ${index + 1}`}
+              className={`w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 ${
+                isSingle ? 'aspect-[16/10] sm:aspect-[16/9]' : 'aspect-[4/3]'
+              }`}
+              loading="lazy"
+            />
+          </div>
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/25 via-black/5 to-transparent opacity-60 transition-opacity duration-300 group-hover:opacity-30" />
+          <div className="pointer-events-none absolute inset-0 rounded-2xl sm:rounded-3xl ring-1 ring-inset ring-black/5" />
         </div>
       ))}
     </div>
@@ -183,7 +197,6 @@ export function ChurchSite() {
               <p className="mt-8 max-w-xl text-lg leading-8 text-[#59615b]">
                 Welcome to The Highest Tabernacle of Jesus Christ Ministry Int&apos;l. Come as you are, grow in grace, and find a community that walks with you.
               </p>
-              <SectionPhotos images={settings.sectionImages.hero} label="Home" />
 
               <div className="mt-10 flex flex-wrap items-center gap-4">
                 {settings.prayerOpen ? (
@@ -240,6 +253,7 @@ export function ChurchSite() {
                 </p>
               )}
               <PrayerCountdown startsAt={settings.prayerStartsAt} />
+              <SectionPhotos images={settings.sectionImages.hero} label="Home" className="mt-8" />
             </div>
 
             <div className="relative lg:pl-10">
@@ -278,7 +292,7 @@ export function ChurchSite() {
               <div className="mt-9 flex items-center gap-3 text-sm font-semibold text-[#1c5b4d]">
                 <HeartHandshake className="size-5" /> A community rooted in love and grace
               </div>
-              <SectionPhotos images={settings.sectionImages.welcome} label="Welcome" />
+              <SectionPhotos images={settings.sectionImages.welcome} label="Welcome" className="mt-10" />
             </div>
           </div>
         </section>
@@ -304,7 +318,7 @@ export function ChurchSite() {
                 </div>
               ))}
             </div>
-            <SectionPhotos images={settings.sectionImages.services} label="Services" />
+            <SectionPhotos images={settings.sectionImages.services} label="Services" className="mt-12 sm:mt-16" />
           </div>
         </section>
 
@@ -339,7 +353,7 @@ export function ChurchSite() {
                 <MessageCircle className="size-4" /> Send prayer request
               </button>
             </form>
-            <SectionPhotos images={settings.sectionImages.contact} label="Contact" />
+            <SectionPhotos images={settings.sectionImages.contact} label="Contact" className="mt-10" />
           </div>
           <div className="rounded-2xl bg-[#1c5b4d] p-8 text-[#f7f5f0]">
             <MessageCircle className="size-7 text-[#d6b26e]" />
