@@ -91,6 +91,7 @@ export function readSiteSettings(): SiteSettings {
   }
 }
 
+// Shared online storage so every phone/computer sees the same settings.
 const REMOTE_URL = 'https://uyvzaowcbpvyhyvzrccj.supabase.co/rest/v1/site_settings'
 const REMOTE_KEY = 'sb_publishable_DVuX2f0iSzSIwgXuAUO56A_DdcUN05B'
 const remoteHeaders = { apikey: REMOTE_KEY, 'Content-Type': 'application/json' }
@@ -135,12 +136,14 @@ export async function saveSiteSettings(settings: SiteSettings) {
   cacheLocally(settings)
 }
 
+// Next nightly prayer: every day at 9:00 PM Philippine time (UTC+8, no DST).
 export const PRAYER_HOUR_PH = 21
 export function nextPrayerTime(now = Date.now()) {
   const PH_OFFSET = 8 * 3600_000
   const ph = new Date(now + PH_OFFSET)
   let target =
     Date.UTC(ph.getUTCFullYear(), ph.getUTCMonth(), ph.getUTCDate(), PRAYER_HOUR_PH) - PH_OFFSET
+  // Keep showing "prayer time" for 1 hour after it starts
   if (now >= target + 3600_000) target += 86400_000
   return target
 }
