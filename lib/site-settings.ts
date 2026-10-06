@@ -18,6 +18,7 @@ export type SiteSettings = {
   prayerDescription: string
   prayerLeaderName: string
   prayerLink: string
+  prayerRecordingLink: string
   prayerStartsAt: string
   returnTime: string
   prayerOpen: boolean
@@ -33,6 +34,7 @@ export const initialSettings: SiteSettings = {
     'We gather online to pray, encourage one another, and make space for God together.',
   prayerLeaderName: '',
   prayerLink: 'https://meet.google.com/',
+  prayerRecordingLink: '',
   prayerStartsAt: '',
   returnTime: '9:00 PM',
   prayerOpen: true,
@@ -70,6 +72,7 @@ export function readSiteSettings(): SiteSettings {
       ...initialSettings,
       ...parsed,
       prayerLeaderName: String(parsed.prayerLeaderName || ''),
+      prayerRecordingLink: String(parsed.prayerRecordingLink || ''),
       services: Array.isArray(parsed.services)
         ? parsed.services.map((service, index) => ({
             ...initialSettings.services[index % initialSettings.services.length],
