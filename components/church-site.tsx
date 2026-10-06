@@ -45,12 +45,17 @@ function SectionPhotos({
   return (
     <div className="mt-8 grid gap-4 sm:grid-cols-2">
       {visibleImages.map((image, index) => (
-        <img
+        <div
           key={`${label}-${index}`}
-          src={image}
-          alt={`${label} photo ${index + 1}`}
-          className="aspect-[4/3] w-full rounded-2xl object-cover"
-        />
+          className="group relative overflow-hidden rounded-[1.5rem] border border-[#d9ddd7] bg-[#eef2ec] shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+        >
+          <img
+            src={image}
+            alt={`${label} photo ${index + 1}`}
+            className="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-105"
+          />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-white/0" />
+        </div>
       ))}
     </div>
   )
@@ -118,6 +123,7 @@ export function ChurchSite() {
   }, [])
 
   const prayerHref = safeWebLink(settings.prayerLink)
+  const prayerRecordingHref = safeWebLink(settings.prayerRecordingLink)
   const facebookHref = safeWebLink(settings.facebookPage)
 
   return (
@@ -127,7 +133,7 @@ export function ChurchSite() {
           <a href="#top" className="flex items-center gap-3" aria-label="THJTC home">
             <span className="flex size-10 items-center justify-center overflow-hidden rounded-full bg-[#1c5b4d] text-[#f7f5f0]">
               {settings.logoUrl ? (
-                <img src={settings.logoUrl} alt="THJTC logo" className="size-full object-contain" />
+                <img src={settings.logoUrl} alt="THJTC logo" className="size-full object-cover" />
               ) : (
                 <span className="text-lg" aria-hidden="true">✝</span>
               )}
@@ -177,6 +183,7 @@ export function ChurchSite() {
                 Welcome to The Highest Tabernacle of Jesus Christ Ministry Int&apos;l. Come as you are, grow in grace, and find a community that walks with you.
               </p>
               <SectionPhotos images={settings.sectionImages.hero} label="Home" />
+
               <div className="mt-10 flex flex-wrap items-center gap-4">
                 {settings.prayerOpen ? (
                   <a
@@ -188,14 +195,27 @@ export function ChurchSite() {
                     {settings.prayerTitle}<ArrowUpRight className="size-4" />
                   </a>
                 ) : (
-                  <div className="inline-flex items-center gap-3 rounded-full border border-[#c9d0c9] bg-white px-6 py-3.5 text-sm font-semibold text-[#1c5b4d]">
-                    <Clock3 className="size-4" /> Come back at {settings.returnTime}
+                  <div className="inline-flex flex-col items-start gap-2">
+                    <div className="inline-flex items-center gap-3 rounded-full border border-[#c9d0c9] bg-white px-6 py-3.5 text-sm font-semibold text-[#1c5b4d]">
+                      <Clock3 className="size-4" /> Come back at {settings.returnTime}
+                    </div>
+                    {settings.prayerRecordingLink && prayerRecordingHref !== '#' && (
+                      <a
+                        href={prayerRecordingHref}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-2 text-sm font-semibold text-[#1c5b4d] underline-offset-4 hover:underline"
+                      >
+                        Watch the prayer recording <ArrowUpRight className="size-4" />
+                      </a>
+                    )}
                   </div>
                 )}
                 <a href="#services" className="inline-flex items-center gap-2 px-2 py-3.5 text-sm font-semibold text-[#59615b] transition-colors hover:text-[#1c5b4d]">
                   See our services <ArrowUpRight className="size-4" />
                 </a>
               </div>
+
               {settings.prayerDescription && (
                 <p className="mt-4 max-w-xl text-sm leading-6 text-[#59615b]">{settings.prayerDescription}</p>
               )}
