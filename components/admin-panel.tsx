@@ -157,10 +157,7 @@ export default function AdminPanel() {
   }
 
   async function save() {
-    const images = [
-      settings.logoUrl,
-      ...Object.values(settings.sectionImages).flat(),
-    ]
+    const images = [settings.logoUrl, ...Object.values(settings.sectionImages).flat()]
     if (images.some((image) => !safeImageUrl(image))) {
       setNotice('Image links must start with http:// or https://.')
       return
@@ -175,9 +172,7 @@ export default function AdminPanel() {
   }
 
   function downloadSettings() {
-    const blob = new Blob([JSON.stringify(settings, null, 2)], {
-      type: 'application/json',
-    })
+    const blob = new Blob([JSON.stringify(settings, null, 2)], { type: 'application/json' })
     const url = URL.createObjectURL(blob)
     const link = document.createElement('a')
     link.href = url
@@ -268,12 +263,7 @@ export default function AdminPanel() {
                         title={`Picture ${index + 1}`}
                         value={value}
                         onUrlChange={(next) => updateImages(section.id, index, next)}
-                        onFile={(file) =>
-                          void setUploadedImage(
-                            (next) => updateImages(section.id, index, next),
-                            file,
-                          )
-                        }
+                        onFile={(file) => void setUploadedImage((next) => updateImages(section.id, index, next), file)}
                       />
                     ))}
                   </div>
@@ -297,6 +287,7 @@ export default function AdminPanel() {
                   className="size-5 accent-[#1c5b4d]"
                 />
               </label>
+
               <label className="flex items-center justify-between rounded-xl border border-[#d9ddd7] p-4">
                 <span>
                   <span className="block text-sm font-semibold">Show countdown</span>
@@ -313,6 +304,7 @@ export default function AdminPanel() {
                   className="size-5 accent-[#1c5b4d]"
                 />
               </label>
+
               <label>
                 <span className="text-sm font-semibold">Prayer leader</span>
                 <input
@@ -322,6 +314,7 @@ export default function AdminPanel() {
                   placeholder="Name of assigned leader"
                 />
               </label>
+
               <label>
                 <span className="text-sm font-semibold">Prayer button text</span>
                 <input
@@ -330,6 +323,7 @@ export default function AdminPanel() {
                   className={inputClass}
                 />
               </label>
+
               <label>
                 <span className="text-sm font-semibold">Prayer description</span>
                 <textarea
@@ -338,6 +332,7 @@ export default function AdminPanel() {
                   className="mt-2 min-h-24 w-full rounded-xl border border-[#cbd3cb] bg-white px-4 py-3 text-sm outline-none focus:border-[#1c5b4d] focus:ring-2 focus:ring-[#1c5b4d]/15"
                 />
               </label>
+
               <label>
                 <span className="text-sm font-semibold">Online prayer link</span>
                 <input
@@ -347,6 +342,18 @@ export default function AdminPanel() {
                   className={inputClass}
                 />
               </label>
+
+              <label>
+                <span className="text-sm font-semibold">Prayer recording link</span>
+                <input
+                  type="url"
+                  value={settings.prayerRecordingLink}
+                  onChange={(event) => update({ prayerRecordingLink: event.target.value })}
+                  placeholder="https://drive.google.com/..."
+                  className={inputClass}
+                />
+              </label>
+
               <label>
                 <span className="text-sm font-semibold">Return time when offline</span>
                 <input
