@@ -3,8 +3,10 @@
 import { useEffect, useState } from 'react'
 import {
   ArrowUpRight,
+  BookOpen,
   CalendarDays,
   Clock3,
+  Flame,
   HeartHandshake,
   MapPin,
   Menu,
@@ -23,6 +25,100 @@ import {
   type SiteSettings,
 } from '@/lib/site-settings'
 import { sendPrayerMessage } from '@/lib/prayer-messages'
+
+const prayerScheduleItems = [
+  {
+    date: 'October 5',
+    day: 'Monday',
+    preacher: 'Samuel Ocampo',
+    openingPrayer: 'Arnel Templado',
+    topic: 'HUNGER FOR GOD',
+    scripture: 'Awit 63:1',
+    character: 'David',
+    reflection:
+      'Si David ay may matinding pagnanais na hanapin ang Diyos. Kahit nasa ilang siya, hindi niya hinanap lamang ang comfort—hinanap niya ang presensya ng Diyos.',
+    prayerFocus:
+      'Lord, bigyan Mo ako ng pusong tunay na nagugutom sa Iyo. Higit sa pera, success, comfort, at approval ng tao, Ikaw ang maging pinakamahalaga sa akin.',
+  },
+  {
+    date: 'October 6',
+    day: 'Tuesday',
+    preacher: 'Ching Baid',
+    openingPrayer: 'Khecelyn Baid',
+    topic: "THIRST FOR GOD’S WORD",
+    scripture: 'Jeremias 15:16',
+    character: 'Jeremiah',
+    reflection:
+      'Para kay Jeremias, ang salita ng Diyos ay parang pagkain na nagbibigay-buhay. Kapag tunay tayong uhaw sa Diyos, magiging mahalaga sa atin ang Kanyang Salita.',
+    prayerFocus:
+      'Lord, alisin Mo ang spiritual dryness. Bigyan Mo ako ng desire na magbasa, makinig, at mamuhay ayon sa Iyong Salita.',
+  },
+  {
+    date: 'October 7',
+    day: 'Wednesday',
+    preacher: 'Maribel Juan',
+    openingPrayer: 'Maribel Espino',
+    topic: "CHOOSE GOD’S PRESENCE",
+    scripture: 'Lucas 10:38–42',
+    character: 'Mary',
+    reflection:
+      'Habang abala si Martha sa paglilingkod, pinili ni Mary na umupo sa paanan ni Jesus at makinig sa Kanya. Hindi masama ang maglingkod, pero kailangan nating matutunan na bago ang ginagawa para kay Jesus, mahalaga ang relasyon natin kay Jesus.',
+    prayerFocus:
+      'Lord, tulungan Mo akong hindi maging sobrang abala sa ministry at buhay na nakakalimutan ko nang umupo sa Iyong presensya.',
+  },
+  {
+    date: 'October 8',
+    day: 'Thursday',
+    preacher: 'Maan Inah Palmer',
+    openingPrayer: 'Lyn Igana',
+    topic: 'DESIRE MORE OF GOD',
+    scripture: '1 Hari 19:9–13',
+    character: 'Elijah',
+    reflection:
+      'Pagkatapos ng matinding battle, natutunan ni Elijah na makinig sa Diyos hindi lamang sa malalaking manifestations kundi maging sa banayad na tinig ng Panginoon.',
+    prayerFocus:
+      'Lord, quiet my heart. Alisin ang distractions at ingay na pumipigil sa akin na marinig Ka. Give me a deeper desire for Your presence.',
+  },
+  {
+    date: 'October 9',
+    day: 'Friday',
+    preacher: 'Nanay Leonida',
+    openingPrayer: 'Bro Ariel Espino',
+    topic: 'NEVER STOP SEEKING GOD',
+    scripture: 'Filipos 3:10–14',
+    character: 'Paul',
+    reflection:
+      'Kahit marami nang naranasan si Paul kasama ang Diyos, hindi siya tumigil. Patuloy niyang hinahangad na mas makilala si Cristo. Hindi dapat matapos ang hunger natin dahil lamang may naranasan na tayo sa Diyos.',
+    prayerFocus:
+      'Lord, give me a hunger that never dies and a thirst that never disappears. Help me to seek You every day until the end.',
+  },
+  {
+    date: 'October 10',
+    day: 'Saturday',
+    preacher: 'Sheena Salvador',
+    openingPrayer: 'Bro Jerry',
+    topic: 'HUNGER THAT LEADS TO OBEDIENCE',
+    scripture: 'Genesis 12:1–4',
+    character: 'Abraham',
+    reflection:
+      'Nang tawagin ng Diyos si Abraham, sumunod siya kahit hindi niya alam ang buong journey. Ang tunay na gutom sa Diyos ay hindi lamang emosyon—humahantong ito sa pagsunod.',
+    prayerFocus:
+      'Lord, bigyan Mo ako ng faith to obey. Kahit hindi ko pa nakikita ang lahat, susunod ako sa Iyong salita.',
+  },
+  {
+    date: 'October 11',
+    day: 'Sunday',
+    preacher: 'Ps Emilie',
+    openingPrayer: 'Precious',
+    topic: 'HUNGER FOR REVIVAL',
+    scripture: 'Habakuk 3:2',
+    character: 'Habakuk',
+    reflection:
+      'Nananalangin si Habakuk: “Buhayin Mo muli ang Iyong gawain.” Ang revival ay nagsisimula sa mga taong nagugutom at nauuhaw na makita ang Diyos na kumilos muli.',
+    prayerFocus:
+      'Lord, revive my heart. Revive our families. Revive our young people. Revive our leaders. Revive THTJC. Let revival begin in me.',
+  },
+]
 
 function safeWebLink(value: string, fallback = '#') {
   try {
@@ -145,22 +241,23 @@ export function ChurchSite() {
     <div className="min-h-screen bg-[#f7f5f0] text-[#202320]">
       <header className="border-b border-[#d9ddd7] bg-[#f7f5f0]/95 backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-5 lg:px-10">
-          <a href="#top" className="flex items-center gap-3" aria-label="THJTC home">
+          <a href="#top" className="flex items-center gap-3" aria-label="THTJC home">
             <span className="flex size-10 items-center justify-center overflow-hidden rounded-full bg-[#1c5b4d] text-[#f7f5f0]">
               {settings.logoUrl ? (
-                <img src={settings.logoUrl} alt="THJTC logo" className="size-full object-cover" />
+                <img src={settings.logoUrl} alt="THTJC logo" className="size-full object-cover" />
               ) : (
                 <span className="text-lg" aria-hidden="true">✝</span>
               )}
             </span>
             <span>
-              <span className="block text-[11px] font-semibold uppercase tracking-[0.24em] text-[#1c5b4d]">THJTC</span>
+              <span className="block text-[11px] font-semibold uppercase tracking-[0.24em] text-[#1c5b4d]">THTJC</span>
               <span className="block font-serif text-lg leading-none text-[#202320]">The Highest Tabernacle</span>
             </span>
           </a>
 
           <nav className="hidden items-center gap-8 text-sm font-medium text-[#59615b] md:flex" aria-label="Main navigation">
             <a className="transition-colors hover:text-[#1c5b4d]" href="#welcome">Welcome</a>
+            <a className="transition-colors hover:text-[#1c5b4d]" href="#prayer-schedule">Prayer Schedule</a>
             <a className="transition-colors hover:text-[#1c5b4d]" href="#services">Services</a>
             <a className="transition-colors hover:text-[#1c5b4d]" href="#contact">Contact</a>
           </nav>
@@ -177,6 +274,7 @@ export function ChurchSite() {
           <nav className="border-t border-[#d9ddd7] px-5 py-4 md:hidden" aria-label="Mobile navigation">
             <div className="flex flex-col gap-4 text-sm font-medium text-[#59615b]">
               <a href="#welcome" onClick={() => setMobileNavOpen(false)}>Welcome</a>
+              <a href="#prayer-schedule" onClick={() => setMobileNavOpen(false)}>Prayer Schedule</a>
               <a href="#services" onClick={() => setMobileNavOpen(false)}>Services</a>
               <a href="#contact" onClick={() => setMobileNavOpen(false)}>Contact</a>
             </div>
@@ -260,7 +358,7 @@ export function ChurchSite() {
               <div className="aspect-[4/5] max-w-md overflow-hidden rounded-[2rem] bg-[#dfe7df] p-5 shadow-2xl shadow-[#1c5b4d]/10 lg:ml-auto">
                 <div className="flex h-full flex-col justify-between rounded-[1.5rem] border border-white/70 bg-[#1c5b4d] p-7 text-[#f7f5f0]">
                   <div className="flex items-start justify-between">
-                    <span className="text-sm font-semibold tracking-[0.18em]">THJTC</span>
+                    <span className="text-sm font-semibold tracking-[0.18em]">THTJC</span>
                     <Sparkles className="size-5 text-[#d6b26e]" />
                   </div>
                   <div>
@@ -293,6 +391,94 @@ export function ChurchSite() {
                 <HeartHandshake className="size-5" /> A community rooted in love and grace
               </div>
               <SectionPhotos images={settings.sectionImages.welcome} label="Welcome" className="mt-10" />
+            </div>
+          </div>
+        </section>
+
+        <section id="prayer-schedule" className="border-t border-[#d9ddd7] bg-[#fbf9f4] py-24">
+          <div className="mx-auto max-w-7xl px-5 lg:px-10">
+            <div className="max-w-3xl">
+              <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.25em] text-[#c49752]">
+                <Flame className="size-4 text-[#c49752]" />
+                Prayer &amp; Fasting Calendar
+              </div>
+              <h2 className="mt-3 font-serif text-4xl tracking-[-0.03em] text-[#202320] sm:text-5xl">
+                THTJC Prayer &amp; Fasting Calendar
+              </h2>
+              <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-[#1c5b4d]/20 bg-[#1c5b4d]/10 px-4 py-1.5 text-xs sm:text-sm font-semibold text-[#1c5b4d]">
+                <Sparkles className="size-3.5 text-[#c49752]" />
+                Theme: &ldquo;HUNGER &amp; THIRST IN GOD&rsquo;S PRESENCE&rdquo;
+              </div>
+              <blockquote className="mt-6 rounded-2xl border-l-4 border-[#c49752] bg-[#f2eee6]/70 p-5 italic text-[#59615b] sm:text-lg">
+                &ldquo;Gaya ng usa na sabik sa batis ng tubig, gayon ang aking kaluluwa ay sabik sa iyo, O Diyos.&rdquo;
+                <footer className="mt-2 text-sm font-semibold not-italic text-[#1c5b4d]">
+                  — Awit 42:1
+                </footer>
+              </blockquote>
+            </div>
+
+            <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {prayerScheduleItems.map((item, idx) => (
+                <div
+                  key={idx}
+                  className="group flex flex-col justify-between rounded-3xl border border-[#d9ddd7] bg-white p-7 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#1c5b4d]/40 hover:shadow-xl"
+                >
+                  <div>
+                    <div className="flex items-center justify-between border-b border-[#eef2ec] pb-4">
+                      <div>
+                        <span className="font-serif text-xl font-bold text-[#1c5b4d]">
+                          {item.date}
+                        </span>
+                        <span className="ml-2 text-xs font-semibold uppercase tracking-wider text-[#829087]">
+                          ({item.day})
+                        </span>
+                      </div>
+                      <span className="rounded-full bg-[#1c5b4d]/10 px-3 py-1 text-xs font-semibold text-[#1c5b4d]">
+                        Day {idx + 1}
+                      </span>
+                    </div>
+
+                    <div className="mt-4 space-y-1.5 text-xs text-[#59615b]">
+                      <p>
+                        <strong className="text-[#202320]">Preacher:</strong> {item.preacher}
+                      </p>
+                      <p>
+                        <strong className="text-[#202320]">Opening Prayer:</strong> {item.openingPrayer}
+                      </p>
+                    </div>
+
+                    <div className="mt-5">
+                      <p className="text-[11px] font-bold uppercase tracking-wider text-[#c49752]">
+                        Topic
+                      </p>
+                      <h3 className="mt-0.5 font-serif text-lg font-bold text-[#202320]">
+                        {item.topic}
+                      </h3>
+                      <div className="mt-2.5 flex flex-wrap items-center gap-2 text-xs">
+                        <span className="inline-flex items-center gap-1.5 rounded-md bg-[#eef2ec] px-2.5 py-1 font-semibold text-[#1c5b4d]">
+                          <BookOpen className="size-3" /> {item.scripture}
+                        </span>
+                        <span className="rounded-md border border-[#e5ebe5] bg-[#f7f5f0] px-2.5 py-1 text-[#59615b]">
+                          Character: <strong className="text-[#202320]">{item.character}</strong>
+                        </span>
+                      </div>
+                    </div>
+
+                    <p className="mt-4 text-xs leading-relaxed text-[#59615b]">
+                      {item.reflection}
+                    </p>
+                  </div>
+
+                  <div className="mt-6 rounded-2xl border border-[#cde0d7] bg-[#f0f7f3] p-4 text-xs text-[#1c5b4d]">
+                    <p className="mb-1.5 flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-[#1c5b4d]">
+                      <span>🙏</span> Prayer Focus
+                    </p>
+                    <p className="italic leading-relaxed text-[#202320]">
+                      &ldquo;{item.prayerFocus}&rdquo;
+                    </p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </section>

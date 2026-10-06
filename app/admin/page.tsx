@@ -2,7 +2,7 @@ import AdminPanel from '@/components/admin-panel'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Site admin | THJTC',
+  title: 'Site admin | THTJC',
   robots: { index: false, follow: false },
 }
 
