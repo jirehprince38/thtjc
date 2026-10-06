@@ -9,6 +9,7 @@ import {
   MapPin,
   Menu,
   MessageCircle,
+  Play,
   Sparkles,
   X,
 } from 'lucide-react'
@@ -190,27 +191,41 @@ export function ChurchSite() {
                     href={prayerHref}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-3 rounded-full bg-[#1c5b4d] px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-[#1c5b4d]/15 transition-transform hover:-translate-y-0.5"
+                    className="inline-flex items-center gap-3 rounded-full bg-[#1c5b4d] px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-[#1c5b4d]/15 transition-transform hover:-translate-y-0.5 hover:bg-[#16483d]"
                   >
                     {settings.prayerTitle}<ArrowUpRight className="size-4" />
                   </a>
                 ) : (
-                  <div className="inline-flex flex-col items-start gap-2">
-                    <div className="inline-flex items-center gap-3 rounded-full border border-[#c9d0c9] bg-white px-6 py-3.5 text-sm font-semibold text-[#1c5b4d]">
-                      <Clock3 className="size-4" /> Come back at {settings.returnTime}
-                    </div>
-                    {settings.prayerRecordingLink && prayerRecordingHref !== '#' && (
-                      <a
-                        href={prayerRecordingHref}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex items-center gap-2 text-sm font-semibold text-[#1c5b4d] underline-offset-4 hover:underline"
-                      >
-                        Watch the prayer recording <ArrowUpRight className="size-4" />
-                      </a>
-                    )}
+                  <div className="inline-flex items-center gap-2.5 rounded-full border border-[#cbd3cb] bg-white px-5 py-3.5 text-sm font-medium text-[#59615b]">
+                    <Clock3 className="size-4 text-[#1c5b4d]" /> Come back at {settings.returnTime}
                   </div>
                 )}
+
+                {settings.prayerRecordingLink && prayerRecordingHref !== '#' && (
+                  <a
+                    href={prayerRecordingHref}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={`group inline-flex items-center gap-2.5 rounded-full px-6 py-3.5 text-sm font-semibold transition-all duration-200 hover:-translate-y-0.5 ${
+                      settings.prayerOpen
+                        ? 'border-2 border-[#1c5b4d] bg-white text-[#1c5b4d] shadow-sm hover:bg-[#1c5b4d] hover:text-white hover:shadow-md'
+                        : 'bg-[#1c5b4d] text-white shadow-lg shadow-[#1c5b4d]/20 hover:bg-[#16483d] hover:shadow-xl hover:shadow-[#1c5b4d]/25'
+                    }`}
+                  >
+                    <span
+                      className={`flex size-6 items-center justify-center rounded-full transition-transform group-hover:scale-110 ${
+                        settings.prayerOpen
+                          ? 'bg-[#1c5b4d]/10 text-[#1c5b4d] group-hover:bg-white group-hover:text-[#1c5b4d]'
+                          : 'bg-white/20 text-white'
+                      }`}
+                    >
+                      <Play className="ml-0.5 size-3 fill-current" />
+                    </span>
+                    <span>Watch the prayer recording</span>
+                    <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </a>
+                )}
+
                 <a href="#services" className="inline-flex items-center gap-2 px-2 py-3.5 text-sm font-semibold text-[#59615b] transition-colors hover:text-[#1c5b4d]">
                   See our services <ArrowUpRight className="size-4" />
                 </a>
