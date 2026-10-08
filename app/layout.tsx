@@ -7,10 +7,10 @@ export const metadata: Metadata = {
   description: 'A welcoming church community in Baliti, City of San Fernando, Pampanga — loving God and loving people.',
   icons: {
     icon: [
-      { url: '/favicon.ico?v=2', sizes: '16x16 32x32', type: 'image/x-icon' },
-      { url: '/thtjc-favicon.png?v=2', type: 'image/png', sizes: '512x512' },
+      { url: '/favicon.ico?v=3', sizes: '16x16 32x32 48x48', type: 'image/x-icon' },
+      { url: '/thtjc-favicon.png?v=3', type: 'image/png', sizes: '512x512' },
     ],
-    shortcut: '/favicon.ico?v=2',
+    shortcut: '/favicon.ico?v=3',
   },
 }
 
