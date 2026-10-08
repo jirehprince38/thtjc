@@ -5,23 +5,8 @@ import './globals.css'
 export const metadata: Metadata = {
   title: 'The Highest Tabernacle of Jesus Christ Ministry Int’l',
   description: 'A welcoming church community in Baliti, City of San Fernando, Pampanga — loving God and loving people.',
-  generator: 'v0.app',
   icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
+    icon: [{ url: '/icon.svg', type: 'image/svg+xml', sizes: 'any' }],
   },
 }
 
