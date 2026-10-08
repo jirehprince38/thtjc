@@ -181,6 +181,36 @@ export default function AdminPanel() {
     URL.revokeObjectURL(url)
   }
 
+  function updatePrayerCalendar(patch: Partial<SiteSettings['prayerCalendar']>) {
+    update({ prayerCalendar: { ...settings.prayerCalendar, ...patch } })
+  }
+
+  function updatePrayerCalendarEntry(index: number, patch: Partial<SiteSettings['prayerCalendar']['entries'][number]>) {
+    updatePrayerCalendar({
+      entries: settings.prayerCalendar.entries.map((entry, entryIndex) =>
+        entryIndex === index ? { ...entry, ...patch } : entry,
+      ),
+    })
+  }
+
+  function addPrayerCalendarEntry() {
+    updatePrayerCalendar({
+      entries: [
+        ...settings.prayerCalendar.entries,
+        {
+          id: `calendar-day-${Date.now()}`, date: '', day: '', preacher: '', openingPrayer: '',
+          topic: '', scripture: '', character: '', reflection: '', prayerFocus: '',
+        },
+      ],
+    })
+  }
+
+  function removePrayerCalendarEntry(index: number) {
+    updatePrayerCalendar({
+      entries: settings.prayerCalendar.entries.filter((_, entryIndex) => entryIndex !== index),
+    })
+  }
+
   function addService() {
     update({
       services: [
@@ -232,7 +262,7 @@ export default function AdminPanel() {
         </header>
 
         <aside className="mt-6 rounded-xl border border-[#e1c98f] bg-[#fff8e8] p-4 text-sm leading-6 text-[#58491f]">
-          No login is required. This unlinked admin page is not password-protected. Changes and uploaded images are saved only in this browser and will not update other visitors&apos; devices.
+          This admin page is not password-protected. Saved settings are shared online and visible to all visitors.
         </aside>
 
         <div className="mt-8 space-y-8">
@@ -362,6 +392,64 @@ export default function AdminPanel() {
                   className={inputClass}
                 />
               </label>
+            </div>
+          </section>
+
+          <section className="rounded-2xl border border-[#d9ddd7] bg-white p-5 sm:p-7">
+            <div className="flex flex-wrap items-end justify-between gap-3">
+              <div>
+                <h2 className="font-serif text-2xl">THTJC Prayer Calendar</h2>
+                <p className="mt-1 text-sm text-[#59615b]">Edit every calendar text below. These changes appear on the separate Prayer Calendar page.</p>
+              </div>
+              <button type="button" onClick={addPrayerCalendarEntry} className="inline-flex items-center gap-2 rounded-full border border-[#b9c6bb] px-4 py-2 text-sm font-semibold text-[#1c5b4d]">
+                <Plus className="size-4" /> Add day
+              </button>
+            </div>
+
+            <div className="mt-5 grid gap-4 sm:grid-cols-2">
+              <label className="sm:col-span-2">
+                <span className="text-sm font-semibold">Calendar title</span>
+                <input value={settings.prayerCalendar.title} onChange={(event) => updatePrayerCalendar({ title: event.target.value })} className={inputClass} />
+              </label>
+              <label className="sm:col-span-2">
+                <span className="text-sm font-semibold">Theme</span>
+                <input value={settings.prayerCalendar.theme} onChange={(event) => updatePrayerCalendar({ theme: event.target.value })} className={inputClass} />
+              </label>
+              <label>
+                <span className="text-sm font-semibold">Verse reference</span>
+                <input value={settings.prayerCalendar.verseReference} onChange={(event) => updatePrayerCalendar({ verseReference: event.target.value })} className={inputClass} />
+              </label>
+              <label className="sm:col-span-2">
+                <span className="text-sm font-semibold">Verse text</span>
+                <textarea value={settings.prayerCalendar.verseText} onChange={(event) => updatePrayerCalendar({ verseText: event.target.value })} className="mt-2 min-h-24 w-full rounded-xl border border-[#cbd3cb] bg-white px-4 py-3 text-sm outline-none focus:border-[#1c5b4d] focus:ring-2 focus:ring-[#1c5b4d]/15" />
+              </label>
+            </div>
+
+            <div className="mt-8 space-y-4">
+              {settings.prayerCalendar.entries.map((entry, index) => (
+                <article key={entry.id} className="rounded-xl border border-[#d9ddd7] p-4 sm:p-5">
+                  <div className="mb-4 flex items-center justify-between gap-3">
+                    <h3 className="font-semibold text-[#1c5b4d]">Day {index + 1}{entry.date ? ' — ' + entry.date : ''}</h3>
+                    <button type="button" onClick={() => removePrayerCalendarEntry(index)} aria-label={"Remove calendar day " + (entry.date || index + 1)} className="rounded-full p-2 text-red-700 hover:bg-red-50">
+                      <Trash2 className="size-4" />
+                    </button>
+                  </div>
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <label><span className="text-xs font-semibold text-[#59615b]">Date</span><input value={entry.date} onChange={(event) => updatePrayerCalendarEntry(index, { date: event.target.value })} className={inputClass} placeholder="October 5" /></label>
+                    <label><span className="text-xs font-semibold text-[#59615b]">Day of week</span><input value={entry.day} onChange={(event) => updatePrayerCalendarEntry(index, { day: event.target.value })} className={inputClass} placeholder="Monday" /></label>
+                    <label><span className="text-xs font-semibold text-[#59615b]">Preacher</span><input value={entry.preacher} onChange={(event) => updatePrayerCalendarEntry(index, { preacher: event.target.value })} className={inputClass} /></label>
+                    <label><span className="text-xs font-semibold text-[#59615b]">Opening prayer</span><input value={entry.openingPrayer} onChange={(event) => updatePrayerCalendarEntry(index, { openingPrayer: event.target.value })} className={inputClass} /></label>
+                    <label><span className="text-xs font-semibold text-[#59615b]">Topic</span><input value={entry.topic} onChange={(event) => updatePrayerCalendarEntry(index, { topic: event.target.value })} className={inputClass} /></label>
+                    <label><span className="text-xs font-semibold text-[#59615b]">Scripture</span><input value={entry.scripture} onChange={(event) => updatePrayerCalendarEntry(index, { scripture: event.target.value })} className={inputClass} /></label>
+                    <label className="sm:col-span-2"><span className="text-xs font-semibold text-[#59615b]">Bible character</span><input value={entry.character} onChange={(event) => updatePrayerCalendarEntry(index, { character: event.target.value })} className={inputClass} /></label>
+                    <label><span className="text-xs font-semibold text-[#59615b]">Reflection</span><textarea value={entry.reflection} onChange={(event) => updatePrayerCalendarEntry(index, { reflection: event.target.value })} className="mt-2 min-h-28 w-full rounded-xl border border-[#cbd3cb] bg-white px-4 py-3 text-sm outline-none focus:border-[#1c5b4d] focus:ring-2 focus:ring-[#1c5b4d]/15" /></label>
+                    <label><span className="text-xs font-semibold text-[#59615b]">Prayer focus</span><textarea value={entry.prayerFocus} onChange={(event) => updatePrayerCalendarEntry(index, { prayerFocus: event.target.value })} className="mt-2 min-h-28 w-full rounded-xl border border-[#cbd3cb] bg-white px-4 py-3 text-sm outline-none focus:border-[#1c5b4d] focus:ring-2 focus:ring-[#1c5b4d]/15" /></label>
+                  </div>
+                </article>
+              ))}
+              {settings.prayerCalendar.entries.length === 0 && (
+                <p className="rounded-xl border border-dashed border-[#b9c6bb] p-5 text-sm text-[#59615b]">No calendar days yet. Use Add day to create the first one.</p>
+              )}
             </div>
           </section>
 

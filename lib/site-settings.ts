@@ -12,6 +12,27 @@ export type EditableService = {
   visible: boolean
 }
 
+export type EditablePrayerCalendarEntry = {
+  id: string
+  date: string
+  day: string
+  preacher: string
+  openingPrayer: string
+  topic: string
+  scripture: string
+  character: string
+  reflection: string
+  prayerFocus: string
+}
+
+export type PrayerCalendarContent = {
+  title: string
+  theme: string
+  verseText: string
+  verseReference: string
+  entries: EditablePrayerCalendarEntry[]
+}
+
 export type SiteSettings = {
   logoUrl: string
   prayerTitle: string
@@ -24,6 +45,7 @@ export type SiteSettings = {
   prayerOpen: boolean
   facebookPage: string
   services: EditableService[]
+  prayerCalendar: PrayerCalendarContent
   sectionImages: Record<ContentSection, ImagePair>
 }
 
@@ -44,6 +66,21 @@ export const initialSettings: SiteSettings = {
     { id: 'midweek', label: 'Mid-week Service', time: '19:00', detail: 'Every Wednesday', visible: true },
     { id: 'prayer-night', label: 'Prayer Night', time: '21:00', detail: 'Online gathering', visible: true },
   ],
+  prayerCalendar: {
+    title: 'THTJC Prayer & Fasting Calendar',
+    theme: "HUNGER & THIRST IN GOD'S PRESENCE",
+    verseText: 'Gaya ng usa na sabik sa batis ng tubig, gayon ang aking kaluluwa ay sabik sa iyo, O Diyos.',
+    verseReference: 'Awit 42:1',
+    entries: [
+      { id: 'day-1', date: 'October 5', day: 'Monday', preacher: 'Samuel Ocampo', openingPrayer: 'Arnel Templado', topic: 'HUNGER FOR GOD', scripture: 'Awit 63:1', character: 'David', reflection: 'Si David ay may matinding pagnanais na hanapin ang Diyos. Kahit nasa ilang siya, hindi niya hinanap lamang ang comfort—hinanap niya ang presensya ng Diyos.', prayerFocus: 'Lord, bigyan Mo ako ng pusong tunay na nagugutom sa Iyo. Higit sa pera, success, comfort, at approval ng tao, Ikaw ang maging pinakamahalaga sa akin.' },
+      { id: 'day-2', date: 'October 6', day: 'Tuesday', preacher: 'Ching Baid', openingPrayer: 'Khecelyn Baid', topic: 'THIRST FOR GOD’S WORD', scripture: 'Jeremias 15:16', character: 'Jeremiah', reflection: 'Para kay Jeremias, ang salita ng Diyos ay parang pagkain na nagbibigay-buhay. Kapag tunay tayong uhaw sa Diyos, magiging mahalaga sa atin ang Kanyang Salita.', prayerFocus: 'Lord, alisin Mo ang spiritual dryness. Bigyan Mo ako ng desire na magbasa, makinig, at mamuhay ayon sa Iyong Salita.' },
+      { id: 'day-3', date: 'October 7', day: 'Wednesday', preacher: 'Maribel Juan', openingPrayer: 'Maribel Espino', topic: 'CHOOSE GOD’S PRESENCE', scripture: 'Lucas 10:38–42', character: 'Mary', reflection: 'Habang abala si Martha sa paglilingkod, pinili ni Mary na umupo sa paanan ni Jesus at makinig sa Kanya. Hindi masama ang maglingkod, pero kailangan nating matutunan na bago ang ginagawa para kay Jesus, mahalaga ang relasyon natin kay Jesus.', prayerFocus: 'Lord, tulungan Mo akong hindi maging sobrang abala sa ministry at buhay na nakakalimutan ko nang umupo sa Iyong presensya.' },
+      { id: 'day-4', date: 'October 8', day: 'Thursday', preacher: 'Maan Inah Palmer', openingPrayer: 'Lyn Igana', topic: 'DESIRE MORE OF GOD', scripture: '1 Hari 19:9–13', character: 'Elijah', reflection: 'Pagkatapos ng matinding battle, natutunan ni Elijah na makinig sa Diyos hindi lamang sa malalaking manifestations kundi maging sa banayad na tinig ng Panginoon.', prayerFocus: 'Lord, quiet my heart. Alisin ang distractions at ingay na pumipigil sa akin na marinig Ka. Give me a deeper desire for Your presence.' },
+      { id: 'day-5', date: 'October 9', day: 'Friday', preacher: 'Nanay Leonida', openingPrayer: 'Bro Ariel Espino', topic: 'NEVER STOP SEEKING GOD', scripture: 'Filipos 3:10–14', character: 'Paul', reflection: 'Kahit marami nang naranasan si Paul kasama ang Diyos, hindi siya tumigil. Patuloy niyang hinahangad na mas makilala si Cristo. Hindi dapat matapos ang hunger natin dahil lamang may naranasan na tayo sa Diyos.', prayerFocus: 'Lord, give me a hunger that never dies and a thirst that never disappears. Help me to seek You every day until the end.' },
+      { id: 'day-6', date: 'October 10', day: 'Saturday', preacher: 'Sheena Salvador', openingPrayer: 'Bro Jerry', topic: 'HUNGER THAT LEADS TO OBEDIENCE', scripture: 'Genesis 12:1–4', character: 'Abraham', reflection: 'Nang tawagin ng Diyos si Abraham, sumunod siya kahit hindi niya alam ang buong journey. Ang tunay na gutom sa Diyos ay hindi lamang emosyon—humahantong ito sa pagsunod.', prayerFocus: 'Lord, bigyan Mo ako ng faith to obey. Kahit hindi ko pa nakikita ang lahat, susunod ako sa Iyong salita.' },
+      { id: 'day-7', date: 'October 11', day: 'Sunday', preacher: 'Ps Emilie', openingPrayer: 'Precious', topic: 'HUNGER FOR REVIVAL', scripture: 'Habakuk 3:2', character: 'Habakuk', reflection: 'Nananalangin si Habakuk: “Buhayin Mo muli ang Iyong gawain.” Ang revival ay nagsisimula sa mga taong nagugutom at nauuhaw na makita ang Diyos na kumilos muli.', prayerFocus: 'Lord, revive my heart. Revive our families. Revive our young people. Revive our leaders. Revive THTJC. Let revival begin in me.' },
+    ],
+  },
   sectionImages: {
     hero: ['', ''],
     welcome: ['', ''],
@@ -68,9 +105,43 @@ export function readSiteSettings(): SiteSettings {
       }
     }
 
+    const calendar = parsed.prayerCalendar
+    const calendarEntries = Array.isArray(calendar?.entries)
+      ? calendar.entries.map((entry, index) => {
+          const fallback = initialSettings.prayerCalendar.entries[index] || {
+            id: `day-${index + 1}`, date: '', day: '', preacher: '', openingPrayer: '',
+            topic: '', scripture: '', character: '', reflection: '', prayerFocus: '',
+          }
+          return {
+            ...fallback,
+            ...entry,
+            id: String(entry.id ?? fallback.id),
+            date: String(entry.date ?? ''),
+            day: String(entry.day ?? ''),
+            preacher: String(entry.preacher ?? ''),
+            openingPrayer: String(entry.openingPrayer ?? ''),
+            topic: String(entry.topic ?? ''),
+            scripture: String(entry.scripture ?? ''),
+            character: String(entry.character ?? ''),
+            reflection: String(entry.reflection ?? ''),
+            prayerFocus: String(entry.prayerFocus ?? ''),
+          }
+        })
+      : initialSettings.prayerCalendar.entries
+    const prayerCalendar = {
+      ...initialSettings.prayerCalendar,
+      ...calendar,
+      title: String(calendar?.title ?? initialSettings.prayerCalendar.title),
+      theme: String(calendar?.theme ?? initialSettings.prayerCalendar.theme),
+      verseText: String(calendar?.verseText ?? initialSettings.prayerCalendar.verseText),
+      verseReference: String(calendar?.verseReference ?? initialSettings.prayerCalendar.verseReference),
+      entries: calendarEntries,
+    }
+
     return {
       ...initialSettings,
       ...parsed,
+      prayerCalendar,
       prayerLeaderName: String(parsed.prayerLeaderName || ''),
       prayerRecordingLink: String(parsed.prayerRecordingLink || ''),
       services: Array.isArray(parsed.services)
