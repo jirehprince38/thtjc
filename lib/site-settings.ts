@@ -68,7 +68,7 @@ export const initialSettings: SiteSettings = {
   ],
   prayerCalendar: {
     title: 'THTJC Prayer & Fasting Calendar',
-    theme: 'HUNGER & THIRST IN GOD'S PRESENCE',
+    theme: "HUNGER & THIRST IN GOD'S PRESENCE",
     verseText: 'Gaya ng usa na sabik sa batis ng tubig, gayon ang aking kaluluwa ay sabik sa iyo, O Diyos.',
     verseReference: 'Awit 42:1',
     entries: [
