@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: 'The Highest Tabernacle of Jesus Christ Ministry Int’l',
   description: 'A welcoming church community in Baliti, City of San Fernando, Pampanga — loving God and loving people.',
   icons: {
-    icon: [{ url: '/icon.svg', type: 'image/svg+xml', sizes: 'any' }],
+    icon: [{ url: '/thtjc-favicon.png', type: 'image/png', sizes: '280x280' }],
   },
 }
 
