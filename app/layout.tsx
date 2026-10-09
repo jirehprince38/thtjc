@@ -2,12 +2,12 @@ import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
 
-// Permanently hosted, share-sized copy; Facebook CDN links expire.
+// User-selected online prayer announcement for shared-link previews.
 const shareImage = {
-  url: 'https://id-preview--682b1a99-6406-4d09-8879-6994fb636580.lovable.app/__l5e/assets-v1/0ffe14d4-0c3d-4ce6-9a4d-b27c49f7a4b8/thtjc-great-harvest-preview-1200.jpg',
-  width: 1200,
-  height: 600,
-  alt: 'The Great Harvest — THTJC Church Pampanga',
+  url: 'https://user42297.na.imgto.link/public/20261008/736a9af8009c0fb5a557476f-online-prayer-church-announcement.avif?__imgto_raw=1',
+  width: 1774,
+  height: 887,
+  alt: 'Join our Online Prayer — THTJC Church Pampanga',
 }
 
 export const metadata: Metadata = {
