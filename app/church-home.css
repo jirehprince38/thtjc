@@ -1,0 +1,44 @@
+/* Scoped homepage styling leaves calendar and admin themes unchanged. */
+@theme inline {
+  --color-church-paper: var(--church-paper);
+  --color-church-surface: var(--church-surface);
+  --color-church-ink: var(--church-ink);
+  --color-church-muted: var(--church-muted);
+  --color-church-brand: var(--church-brand);
+  --color-church-brand-deep: var(--church-brand-deep);
+  --color-church-on-brand: var(--church-on-brand);
+  --color-church-soft: var(--church-soft);
+  --color-church-line: var(--church-line);
+  --color-church-gold: var(--church-gold);
+}
+.church-site {
+  --church-paper: oklch(0.988 0.002 150);
+  --church-surface: oklch(1 0 0);
+  --church-ink: oklch(0.24 0.019 160);
+  --church-muted: oklch(0.48 0.025 160);
+  --church-brand: oklch(0.40 0.07 166);
+  --church-brand-deep: oklch(0.32 0.055 166);
+  --church-on-brand: oklch(0.99 0.002 150);
+  --church-soft: oklch(0.955 0.009 150);
+  --church-line: oklch(0.86 0.012 150);
+  --church-gold: oklch(0.49 0.075 78);
+  color-scheme: light;
+  font-family: 'Avenir Next', 'Segoe UI', Arial, sans-serif;
+  letter-spacing: 0;
+}
+.church-site .font-serif { font-family: Georgia, 'Times New Roman', serif; font-weight: 400; }
+.church-site h1, .church-site h2 { text-wrap: balance; }
+.church-site p { text-wrap: pretty; }
+.church-site section[id], .church-site main[id] { scroll-margin-top: 6rem; }
+.church-site a, .church-site button { transition: background-color 160ms ease, color 160ms ease, transform 160ms ease; }
+.church-site a:focus-visible, .church-site button:focus-visible { outline: 2px solid var(--church-brand); outline-offset: 5px; }
+.church-site input, .church-site textarea { color: var(--church-ink); }
+.church-site img { display: block; }
+.church-site footer { background: var(--church-soft); }
+@media (max-width: 767px) {
+  .church-site header a[aria-label="THTJC home"] > span:last-child { max-width: 230px; }
+  .church-announcement img { min-height: 120px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .church-site *, .church-site *::before, .church-site *::after { transition: none !important; animation: none !important; }
+}
