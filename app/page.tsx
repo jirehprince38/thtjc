@@ -1,4 +1,5 @@
 import ChurchSite from '@/components/church-site'
+import './church-home.css'
 
 export default function Page() {
   return <ChurchSite />
