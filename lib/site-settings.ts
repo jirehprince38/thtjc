@@ -44,6 +44,7 @@ export type SiteSettings = {
   returnTime: string
   prayerOpen: boolean
   facebookPage: string
+  gmailContact: string
   services: EditableService[]
   prayerCalendar: PrayerCalendarContent
   sectionImages: Record<ContentSection, ImagePair>
@@ -61,6 +62,7 @@ export const initialSettings: SiteSettings = {
   returnTime: '9:00 PM',
   prayerOpen: true,
   facebookPage: '',
+  gmailContact: '',
   services: [
     { id: 'sunday', label: 'Sunday Celebration', time: '08:00', detail: 'Every Sunday', visible: true },
     { id: 'midweek', label: 'Mid-week Service', time: '19:00', detail: 'Every Wednesday', visible: true },
@@ -143,6 +145,7 @@ export function readSiteSettings(): SiteSettings {
       ...parsed,
       prayerCalendar,
       prayerLeaderName: String(parsed.prayerLeaderName || ''),
+      gmailContact: String(parsed.gmailContact || ''),
       prayerRecordingLink: String(parsed.prayerRecordingLink || ''),
       services: Array.isArray(parsed.services)
         ? parsed.services.map((service, index) => ({
