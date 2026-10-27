@@ -1,8 +1,8 @@
 import ChurchSite from '@/components/church-site'
+import PrayerReminder from '@/components/prayer-reminder'
 import './church-home.css'
+import './prayer-reminder.css'
 
 export default function Page() {
-  return <ChurchSite />
+  return <><ChurchSite /><PrayerReminder /></>
 }
-
-// Keep the public homepage as a route shell; the separate admin editor lives at /admin.
