@@ -522,6 +522,16 @@ export default function AdminPanel() {
           <section className="rounded-2xl border border-[#d9ddd7] bg-white p-5 sm:p-7">
             <h2 className="font-serif text-2xl">Other links</h2>
             <label className="mt-5 block">
+              <span className="text-sm font-semibold">Gmail contact (shown at the bottom of the page)</span>
+              <input
+                type="email"
+                value={settings.gmailContact}
+                onChange={(event) => update({ gmailContact: event.target.value })}
+                placeholder="yourname@gmail.com"
+                className={inputClass}
+              />
+            </label>
+            <label className="mt-5 block">
               <span className="text-sm font-semibold">Facebook page URL</span>
               <input
                 type="url"
