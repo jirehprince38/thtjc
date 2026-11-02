@@ -56,6 +56,9 @@ export type SiteSettings = {
   prayerOpen: boolean
   facebookPage: string
   gmailContact: string
+  announcementTitle: string
+  announcementText: string
+  announcementImage: string
   services: EditableService[]
   prayerCalendar: PrayerCalendarContent
   sectionImages: Record<ContentSection, ImagePair>
@@ -74,6 +77,9 @@ export const initialSettings: SiteSettings = {
   prayerOpen: true,
   facebookPage: '',
   gmailContact: '',
+  announcementTitle: 'News & Announcement',
+  announcementText: '',
+  announcementImage: '',
   services: [
     { id: 'sunday', label: 'Sunday Celebration', time: '08:00', detail: 'Every Sunday', visible: true },
     { id: 'midweek', label: 'Mid-week Service', time: '19:00', detail: 'Every Wednesday', visible: true },
@@ -86,12 +92,12 @@ export const initialSettings: SiteSettings = {
     verseReference: 'Awit 42:1',
     entries: [
       { id: 'day-1', date: 'October 5', day: 'Monday', preacher: 'Samuel Ocampo', openingPrayer: 'Arnel Templado', topic: 'HUNGER FOR GOD', scripture: 'Awit 63:1', character: 'David', reflection: 'Si David ay may matinding pagnanais na hanapin ang Diyos. Kahit nasa ilang siya, hindi niya hinanap lamang ang comfort—hinanap niya ang presensya ng Diyos.', prayerFocus: 'Lord, bigyan Mo ako ng pusong tunay na nagugutom sa Iyo. Higit sa pera, success, comfort, at approval ng tao, Ikaw ang maging pinakamahalaga sa akin.' },
-      { id: 'day-2', date: 'October 6', day: 'Tuesday', preacher: 'Ching Baid', openingPrayer: 'Khecelyn Baid', topic: 'THIRST FOR GOD’S WORD', scripture: 'Jeremias 15:16', character: 'Jeremiah', reflection: 'Para kay Jeremias, ang salita ng Diyos ay parang pagkain na nagbibigay-buhay. Kapag tunay tayong uhaw sa Diyos, magiging mahalaga sa atin ang Kanyang Salita.', prayerFocus: 'Lord, alisin Mo ang spiritual dryness. Bigyan Mo ako ng desire na magbasa, makinig, at mamuhay ayon sa Iyong Salita.' },
-      { id: 'day-3', date: 'October 7', day: 'Wednesday', preacher: 'Maribel Juan', openingPrayer: 'Maribel Espino', topic: 'CHOOSE GOD’S PRESENCE', scripture: 'Lucas 10:38–42', character: 'Mary', reflection: 'Habang abala si Martha sa paglilingkod, pinili ni Mary na umupo sa paanan ni Jesus at makinig sa Kanya. Hindi masama ang maglingkod, pero kailangan nating matutunan na bago ang ginagawa para kay Jesus, mahalaga ang relasyon natin kay Jesus.', prayerFocus: 'Lord, tulungan Mo akong hindi maging sobrang abala sa ministry at buhay na nakakalimutan ko nang umupo sa Iyong presensya.' },
-      { id: 'day-4', date: 'October 8', day: 'Thursday', preacher: 'Maan Inah Palmer', openingPrayer: 'Lyn Igana', topic: 'DESIRE MORE OF GOD', scripture: '1 Hari 19:9–13', character: 'Elijah', reflection: 'Pagkatapos ng matinding battle, natutunan ni Elijah na makinig sa Diyos hindi lamang sa malalaking manifestations kundi maging sa banayad na tinig ng Panginoon.', prayerFocus: 'Lord, quiet my heart. Alisin ang distractions at ingay na pumipigil sa akin na marinig Ka. Give me a deeper desire for Your presence.' },
-      { id: 'day-5', date: 'October 9', day: 'Friday', preacher: 'Nanay Leonida', openingPrayer: 'Bro Ariel Espino', topic: 'NEVER STOP SEEKING GOD', scripture: 'Filipos 3:10–14', character: 'Paul', reflection: 'Kahit marami nang naranasan si Paul kasama ang Diyos, hindi siya tumigil. Patuloy niyang hinahangad na mas makilala si Cristo. Hindi dapat matapos ang hunger natin dahil lamang may naranasan na tayo sa Diyos.', prayerFocus: 'Lord, give me a hunger that never dies and a thirst that never disappears. Help me to seek You every day until the end.' },
-      { id: 'day-6', date: 'October 10', day: 'Saturday', preacher: 'Sheena Salvador', openingPrayer: 'Bro Jerry', topic: 'HUNGER THAT LEADS TO OBEDIENCE', scripture: 'Genesis 12:1–4', character: 'Abraham', reflection: 'Nang tawagin ng Diyos si Abraham, sumunod siya kahit hindi niya alam ang buong journey. Ang tunay na gutom sa Diyos ay hindi lamang emosyon—humahantong ito sa pagsunod.', prayerFocus: 'Lord, bigyan Mo ako ng faith to obey. Kahit hindi ko pa nakikita ang lahat, susunod ako sa Iyong salita.' },
-      { id: 'day-7', date: 'October 11', day: 'Sunday', preacher: 'Ps Emilie', openingPrayer: 'Precious', topic: 'HUNGER FOR REVIVAL', scripture: 'Habakuk 3:2', character: 'Habakuk', reflection: 'Nananalangin si Habakuk: “Buhayin Mo muli ang Iyong gawain.” Ang revival ay nagsisimula sa mga taong nagugutom at nauuhaw na makita ang Diyos na kumilos muli.', prayerFocus: 'Lord, revive my heart. Revive our families. Revive our young people. Revive our leaders. Revive THTJC. Let revival begin in me.' },
+      { id: 'day-2', date: 'October 6', day: 'Tuesday', preacher: 'Ching Baid', openingPrayer: 'Khecelyn Baid', topic: 'THIRST FOR GOD’S WORD', scripture: 'Jeremias 15:16', character: 'Jeremiah', reflection: 'Si Jeremiah ay nakaranas ng mga pagdurusa at pagkalito, ngunit nanatiling masikap na hanapin ang salita at presensya ng Diyos.', prayerFocus: 'Lord, turuan Mo akong magtiwala at mahanap ang Iyong salita sa gitna ng kaguluhan.' },
+      { id: 'day-3', date: 'October 7', day: 'Wednesday', preacher: 'Maribel Juan', openingPrayer: 'Maribel Espino', topic: 'CHOOSE GOD’S PRESENCE', scripture: 'Lucas 10:38–42', character: 'Maria', reflection: 'Nais ni Maria na magpahinga sa paanan ni Jesus; sa panahon ng abala, nanaig ang pagnanais na maging malapit sa Kanya.', prayerFocus: 'Lord, ipaalam Mo sa akin ang halaga ng Iyong presensya na higit pa sa lahat ng gawain ko.' },
+      { id: 'day-4', date: 'October 8', day: 'Thursday', preacher: 'Maan Inah Palmer', openingPrayer: 'Lyn Igana', topic: 'DESIRE MORE OF GOD', scripture: '1 Hari 19:9–13', character: 'Elijah', reflection: 'Sa gitna ng boses ng bagyo, nakakarinig si Elijah ng mahinahong tinig ng Diyos. Sa ginaw at pagod, nagkaroon siya ng pagkakataong makitang higit pa sa lakas ng mundo.', prayerFocus: 'Lord, matuto akong pakinggan ang Iyong tinig sa kabila ng sigaw ng mundo.' },
+      { id: 'day-5', date: 'October 9', day: 'Friday', preacher: 'Nanay Leonida', openingPrayer: 'Bro Ariel Espino', topic: 'NEVER STOP SEEKING GOD', scripture: 'Filipos 3:10–14', character: 'Paul', reflection: 'Si Pablo ay hindi tumigil sa paghabol ng higit na kaalaman at pagkilala kay Cristo; siya ay patuloy na humahabol sa layunin ng Diyos.', prayerFocus: 'Lord, huwag Mo akong payagang magsawa sa pagnanais na mapalapit sa Iyo.' },
+      { id: 'day-6', date: 'October 10', day: 'Saturday', preacher: 'Sheena Salvador', openingPrayer: 'Bro Jerry', topic: 'HUNGER THAT LEADS TO OBEDIENCE', scripture: 'Genesis 12:1–4', character: 'Abraham', reflection: 'Ang pagnanais na makilala ang Diyos ay maaaring humantong sa pagtitiwala, pagsunod, at handang umalis sa kinatatakutan.', prayerFocus: 'Lord, turuan Mo akong sundin Ka kahit hindi ko pa nakikita ang buong landas.' },
+      { id: 'day-7', date: 'October 11', day: 'Sunday', preacher: 'Ps Emilie', openingPrayer: 'Precious', topic: 'HUNGER FOR REVIVAL', scripture: 'Habakuk 3:2', character: 'Habakuk', reflection: 'Nanghina si Habakuk, ngunit humingi siya ng revival. Nagtanong siya kung paano maibabalik ang Diyos sa gitna ng pagdurusa at pag-aalangan.', prayerFocus: 'Lord, buhayin Mo ang aking puso at panalangin sa pag-asa at paglilingkod sa Iyo.' },
     ],
     months: [],
   },
@@ -103,23 +109,21 @@ export const initialSettings: SiteSettings = {
   },
 }
 
-
-
 const novemberPrayerCalendarEntries: EditablePrayerCalendarEntry[] = [
-  { id: "november-2026-02", date: "November 2", day: "Monday", preacher: "Ptra Shinar", openingPrayer: "Brooks", topic: "Less of Self, More of Jesus", scripture: "Galatians 2:20", character: "", reflection: "", prayerFocus: "• Isuko ang sariling kagustuhan at unahin ang kalooban ng Diyos.\n• Hayaang si Jesus ang mamahala sa ating buhay.\n• Iwasan ang pagiging makasarili at matutong magpakumbaba." },
-  { id: "november-2026-03", date: "November 3", day: "Tuesday", preacher: "Amelia Catacutan", openingPrayer: "Joy Balingan", topic: "Less Distractions, More of God’s Presence", scripture: "Luke 10:41–42", character: "", reflection: "", prayerFocus: "• Alisin ang mga distractions na umaagaw ng oras natin sa Diyos.\n• Magkaroon ng disiplina sa pananalangin at pagbabasa ng Salita.\n• Matutong unahin ang presensya ng Diyos kaysa sa mga bagay ng mundo." },
-  { id: "november-2026-04", date: "November 4", day: "Wednesday", preacher: "Marie Emborong", openingPrayer: "Arnel Templado", topic: "Less Worry, More Faith", scripture: "Proverbs 3:5–6", character: "", reflection: "", prayerFocus: "• Isuko sa Diyos ang mga alalahanin at takot.\n• Matutong magtiwala kahit hindi natin nauunawaan ang lahat.\n• Palakasin ang pananampalataya sa gitna ng mga pagsubok." },
-  { id: "november-2026-05", date: "November 5", day: "Thursday", preacher: "Maribel Espino", openingPrayer: "Ariel Espino", topic: "Less Pride, More Humility", scripture: "James 4:6", character: "", reflection: "", prayerFocus: "• Alisin ang pride, inggit, at pagnanais na laging mapansin.\n• Magkaroon ng pusong mapagpakumbaba at madaling maturuan.\n• Matutong magbigay ng karangalan sa Diyos at sa ibang tao." },
-  { id: "november-2026-06", date: "November 6", day: "Friday", preacher: "Leoinida", openingPrayer: "Lyn Igana", topic: "Less Anger, More Love", scripture: "1 Corinthians 13:4–5", character: "", reflection: "", prayerFocus: "• Ipagdasal ang kagalingan mula sa galit, sama ng loob, at unforgiveness.\n• Matutong magmahal, magpatawad, at umunawa sa kapwa.\n• Ipakita ang pag-ibig ni Cristo sa pamilya at church family." },
-  { id: "november-2026-07", date: "November 7", day: "Saturday", preacher: "Precious", openingPrayer: "Moises Mallari", topic: "Less Complaining, More Thanksgiving", scripture: "1 Thessalonians 5:18", character: "", reflection: "", prayerFocus: "• Iwasan ang pagrereklamo at negatibong pananalita.\n• Matutong magpasalamat sa Diyos sa lahat ng pagkakataon.\n• Magkaroon ng pusong kuntento at nagtitiwala sa Kanyang kabutihan." },
-  { id: "november-2026-08", date: "November 8", day: "Sunday", preacher: "Lily Garcia", openingPrayer: "Bro Jerry", topic: "Less Sin, More Holiness", scripture: "1 Peter 1:15–16", character: "", reflection: "", prayerFocus: "• Magsisi at talikuran ang mga kasalanang humahadlang sa ating spiritual growth.\n• Hilingin sa Diyos ang malinis na puso at matuwid na espiritu.\n• Mamuhay nang banal at kalugod-lugod sa Panginoon." },
-  { id: "november-2026-09", date: "November 9", day: "Monday", preacher: "Samuel Ocampo", openingPrayer: "Wendell", topic: "Less Self-Interest, More Service", scripture: "Philippians 2:3–4", character: "", reflection: "", prayerFocus: "• Alisin ang pagiging makasarili at ang pagnanais na laging mauna.\n• Magkaroon ng pusong handang maglingkod nang may kagalakan.\n• Ipagdasal ang unity, faithfulness, at commitment ng bawat THTJC member sa gawain ng Panginoon." },
-  { id: "november-2026-10", date: "November 10", day: "Tuesday", preacher: "Retch Baid", openingPrayer: "Fernando", topic: "Less of the World, More of God’s Kingdom", scripture: "Matthew 6:33", character: "", reflection: "", prayerFocus: "• Unahin ang Diyos sa ating mga desisyon, plano, at pang-araw-araw na buhay.\n• Ipagdasal ang mas malalim na commitment sa prayer, worship, at ministry.\n• Hilingin ang spiritual revival sa bawat pamilya, cell group, leaders, at buong THTJC family." },
+  { id: 'november-2026-02', date: 'November 2', day: 'Monday', preacher: 'Ptra Shinar', openingPrayer: 'Brooks', topic: 'Less of Self, More of Jesus', scripture: 'Galatians 2:20', character: '', reflection: '', prayerFocus: '' },
+  { id: 'november-2026-03', date: 'November 3', day: 'Tuesday', preacher: 'Amelia Catacutan', openingPrayer: 'Joy Balingan', topic: 'Less Distractions, More of God’s Presence', scripture: 'Luke 10:41-42', character: '', reflection: '', prayerFocus: '' },
+  { id: 'november-2026-04', date: 'November 4', day: 'Wednesday', preacher: 'Marie Emborong', openingPrayer: 'Arnel Templado', topic: 'Less Worry, More Faith', scripture: 'Proverbs 3:5–6', character: '', reflection: '', prayerFocus: '' },
+  { id: 'november-2026-05', date: 'November 5', day: 'Thursday', preacher: 'Maribel Espino', openingPrayer: 'Ariel Espino', topic: 'Less Pride, More Humility', scripture: 'James 4:6', character: '', reflection: '', prayerFocus: '' },
+  { id: 'november-2026-06', date: 'November 6', day: 'Friday', preacher: 'Leoinida', openingPrayer: 'Lyn Igana', topic: 'Less Anger, More Love', scripture: '1 Corinthians 13:4–5', character: '', reflection: '', prayerFocus: '' },
+  { id: 'november-2026-07', date: 'November 7', day: 'Saturday', preacher: 'Precious', openingPrayer: 'Moises Mallari', topic: 'Less Complaining, More Thanksgiving', scripture: '1 Thessalonians 5:18', character: '', reflection: '', prayerFocus: '' },
+  { id: 'november-2026-08', date: 'November 8', day: 'Sunday', preacher: 'Lily Garcia', openingPrayer: 'Bro Jerry', topic: 'Less Sin, More Holiness', scripture: '1 Peter 1:15–16', character: '', reflection: '', prayerFocus: '' },
+  { id: 'november-2026-09', date: 'November 9', day: 'Monday', preacher: 'Samuel Ocampo', openingPrayer: 'Wendell', topic: 'Less Self-Interest, More Service', scripture: 'Philippians 2:3–4', character: '', reflection: '', prayerFocus: '' },
+  { id: 'november-2026-10', date: 'November 10', day: 'Tuesday', preacher: 'Retch Baid', openingPrayer: 'Fernando', topic: 'Less of the World, More of God’s Kingdom', scripture: 'Matthew 6:33', character: '', reflection: '', prayerFocus: '' },
 ]
 
 initialSettings.prayerCalendar.months = [
-  { id: "2026-10", label: "October 2026", theme: initialSettings.prayerCalendar.theme, introduction: "", verseText: initialSettings.prayerCalendar.verseText, verseReference: initialSettings.prayerCalendar.verseReference, entries: initialSettings.prayerCalendar.entries },
-  { id: "2026-11", label: "November 2026", theme: "DO LESS, DO MORE", introduction: "Ang tunay na revival ay nagsisimula kapag binabawasan natin ang mga bagay na humahadlang sa ating relasyon sa Diyos at mas binibigyan natin ng puwang ang Kanyang presensya, Salita, at kalooban. Less of self, more of God!\n\nOur prayer is not just to do more for God, but to allow God to do more in us and through us.", verseText: "He must become greater; I must become less.", verseReference: "John 3:30", entries: novemberPrayerCalendarEntries },
+  { id: '2026-10', label: 'October 2026', theme: initialSettings.prayerCalendar.theme, introduction: '', verseText: initialSettings.prayerCalendar.verseText, verseReference: initialSettings.prayerCalendar.verseReference, entries: initialSettings.prayerCalendar.entries },
+  { id: '2026-11', label: 'November 2026', theme: 'DO LESS, DO MORE', introduction: 'Ang tunay na revival ay nagsisimula kapag binabawasan natin ang mga bagay na humahadlang sa ating relasyon sa Diyos.', verseText: 'But seek first the kingdom of God and his righteousness.', verseReference: 'Matthew 6:33', entries: novemberPrayerCalendarEntries },
 ]
 
 export function readSiteSettings(): SiteSettings {
@@ -141,22 +145,22 @@ export function readSiteSettings(): SiteSettings {
     const calendar = parsed.prayerCalendar
     const normalizeEntry = (entry: Partial<EditablePrayerCalendarEntry>, index: number) => {
       const fallback = initialSettings.prayerCalendar.entries[index] || {
-        id: "calendar-day-" + (index + 1), date: "", day: "", preacher: "", openingPrayer: "",
-        topic: "", scripture: "", character: "", reflection: "", prayerFocus: "",
+        id: 'calendar-day-' + (index + 1), date: '', day: '', preacher: '', openingPrayer: '',
+        topic: '', scripture: '', character: '', reflection: '', prayerFocus: '',
       }
       return {
         ...fallback,
         ...entry,
         id: String(entry.id ?? fallback.id),
-        date: String(entry.date ?? ""),
-        day: String(entry.day ?? ""),
-        preacher: String(entry.preacher ?? ""),
-        openingPrayer: String(entry.openingPrayer ?? ""),
-        topic: String(entry.topic ?? ""),
-        scripture: String(entry.scripture ?? ""),
-        character: String(entry.character ?? ""),
-        reflection: String(entry.reflection ?? ""),
-        prayerFocus: String(entry.prayerFocus ?? ""),
+        date: String(entry.date ?? ''),
+        day: String(entry.day ?? ''),
+        preacher: String(entry.preacher ?? ''),
+        openingPrayer: String(entry.openingPrayer ?? ''),
+        topic: String(entry.topic ?? ''),
+        scripture: String(entry.scripture ?? ''),
+        character: String(entry.character ?? ''),
+        reflection: String(entry.reflection ?? ''),
+        prayerFocus: String(entry.prayerFocus ?? ''),
       }
     }
     const calendarEntries = Array.isArray(calendar?.entries)
@@ -165,17 +169,17 @@ export function readSiteSettings(): SiteSettings {
     const entriesByMonth = new Map<string, EditablePrayerCalendarEntry[]>()
     for (const entry of calendarEntries) {
       const match = entry.date.match(/^(January|February|March|April|May|June|July|August|September|October|November|December)\b/i)
-      const key = match?.[1].toLowerCase() || "other"
+      const key = match?.[1].toLowerCase() || 'other'
       entriesByMonth.set(key, [...(entriesByMonth.get(key) || []), entry])
     }
-    const metadataMonth = entriesByMonth.has("october")
-      ? "october"
-      : entriesByMonth.keys().next().value || "october"
+    const metadataMonth = entriesByMonth.has('october')
+      ? 'october'
+      : entriesByMonth.keys().next().value || 'october'
     const calendarMonths = Array.isArray(calendar?.months)
       ? calendar.months.map((month, index) => {
           const fallback = initialSettings.prayerCalendar.months[index] || {
-            id: "calendar-month-" + (index + 1), label: "Calendar month " + (index + 1), theme: "",
-            introduction: "", verseText: "", verseReference: "", entries: [],
+            id: 'calendar-month-' + (index + 1), label: 'Calendar month ' + (index + 1), theme: '',
+            introduction: '', verseText: '', verseReference: '', entries: [],
           }
           const monthEntries = Array.isArray(month.entries) ? month.entries.map(normalizeEntry) : fallback.entries
           return {
@@ -183,19 +187,19 @@ export function readSiteSettings(): SiteSettings {
             ...month,
             id: String(month.id ?? fallback.id),
             label: String(month.label ?? fallback.label),
-            theme: String(month.theme ?? ""),
-            introduction: String(month.introduction ?? ""),
-            verseText: String(month.verseText ?? ""),
-            verseReference: String(month.verseReference ?? ""),
+            theme: String(month.theme ?? ''),
+            introduction: String(month.introduction ?? ''),
+            verseText: String(month.verseText ?? ''),
+            verseReference: String(month.verseReference ?? ''),
             entries: monthEntries,
           }
         })
       : (() => {
           const legacyMonths = initialSettings.prayerCalendar.months.map((defaultMonth) => {
-            const monthName = defaultMonth.label.split(" ")[0].toLowerCase()
+            const monthName = defaultMonth.label.split(' ')[0].toLowerCase()
             const metadataIsForThisMonth = monthName === metadataMonth
             const groupedEntries = entriesByMonth.get(monthName)
-            const isNovember = monthName === "november"
+            const isNovember = monthName === 'november'
             return {
               ...defaultMonth,
               theme: metadataIsForThisMonth ? String(calendar?.theme ?? defaultMonth.theme) : defaultMonth.theme,
@@ -204,14 +208,14 @@ export function readSiteSettings(): SiteSettings {
               entries: groupedEntries || (isNovember ? defaultMonth.entries : Array.isArray(calendar?.entries) ? [] : defaultMonth.entries),
             }
           })
-          const knownMonths = new Set(legacyMonths.map((month) => month.label.split(" ")[0].toLowerCase()))
+          const knownMonths = new Set(legacyMonths.map((month) => month.label.split(' ')[0].toLowerCase()))
           const otherMonths = [...entriesByMonth.entries()]
             .filter(([name]) => !knownMonths.has(name))
             .map(([name, entries]) => ({
-              id: name === "other" ? "unsorted-2026" : name + "-2026",
-              label: name === "other" ? "Other dates" : name[0].toUpperCase() + name.slice(1) + " 2026",
-              theme: String(calendar?.theme ?? ""), introduction: "",
-              verseText: String(calendar?.verseText ?? ""), verseReference: String(calendar?.verseReference ?? ""), entries,
+              id: name === 'other' ? 'unsorted-2026' : name + '-2026',
+              label: name === 'other' ? 'Other dates' : name[0].toUpperCase() + name.slice(1) + ' 2026',
+              theme: String(calendar?.theme ?? ''), introduction: '',
+              verseText: String(calendar?.verseText ?? ''), verseReference: String(calendar?.verseReference ?? ''), entries,
             }))
           return [...legacyMonths, ...otherMonths]
         })()
@@ -233,6 +237,9 @@ export function readSiteSettings(): SiteSettings {
       prayerLeaderName: String(parsed.prayerLeaderName || ''),
       gmailContact: String(parsed.gmailContact || ''),
       prayerRecordingLink: String(parsed.prayerRecordingLink || ''),
+      announcementTitle: String(parsed.announcementTitle ?? initialSettings.announcementTitle),
+      announcementText: String(parsed.announcementText ?? ''),
+      announcementImage: String(parsed.announcementImage ?? ''),
       services: Array.isArray(parsed.services)
         ? parsed.services.map((service, index) => ({
             ...initialSettings.services[index % initialSettings.services.length],
