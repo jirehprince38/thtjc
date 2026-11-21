@@ -138,3 +138,35 @@
     display: none !important;
   }
 }
+
+
+/* Smooth feedback for buttons and button-style links across every page. */
+button:not(:disabled):not([aria-disabled="true"]),
+[role="button"]:not([aria-disabled="true"]),
+a[class*="inline-flex"]:not([aria-disabled="true"]),
+.church-site button:not(:disabled):not([aria-disabled="true"]),
+.church-site a[class*="inline-flex"]:not([aria-disabled="true"]) {
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1), background-color 180ms ease, color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  button:not(:disabled):not([aria-disabled="true"]):hover,
+  [role="button"]:not([aria-disabled="true"]):hover,
+  a[class*="inline-flex"]:not([aria-disabled="true"]):hover {
+    transform: translateY(-1px);
+  }
+
+  button:not(:disabled):not([aria-disabled="true"]):active,
+  [role="button"]:not([aria-disabled="true"]):active,
+  a[class*="inline-flex"]:not([aria-disabled="true"]):active {
+    transform: translateY(0) scale(0.985);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button,
+  [role="button"],
+  a[class*="inline-flex"] {
+    transition-duration: 0.01ms;
+  }
+}
